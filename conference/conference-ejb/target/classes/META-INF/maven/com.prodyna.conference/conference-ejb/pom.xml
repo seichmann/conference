@@ -38,6 +38,18 @@
     </licenses>
 
     <dependencies>
+    	<dependency>
+  			<groupId>com.prodyna.conference</groupId>
+  			<artifactId>conference-ejb-client</artifactId>
+  			<scope>provided</scope>
+  		</dependency>
+  			
+    	<dependency>
+  			<groupId>com.prodyna.conference</groupId>
+  			<artifactId>conference-model</artifactId>
+  			<scope>provided</scope>
+  		</dependency>
+  		
         <!-- Declare the APIs we depend on and need for compilation. All of 
             them are provided by JBoss AS 7 -->
 		

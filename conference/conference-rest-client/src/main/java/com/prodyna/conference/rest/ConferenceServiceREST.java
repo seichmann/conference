@@ -31,6 +31,7 @@ import com.prodyna.conference.service.ConferenceService;
 @Path("/conferences")
 @RequestScoped
 public class ConferenceServiceREST {
+
 	@Inject
 	private ConferenceService service;
 

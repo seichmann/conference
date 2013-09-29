@@ -9,13 +9,11 @@
     
   <artifactId>conference-ejb-client</artifactId>
   
-  <dependencyManagement>
-  	<dependencies>
+  <dependencies>
   		<dependency>
   			<groupId>com.prodyna.conference</groupId>
   			<artifactId>conference-model</artifactId>
   			<scope>provided</scope>
   		</dependency>
-  	</dependencies>
-  </dependencyManagement>
+  </dependencies>
 </project>

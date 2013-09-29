@@ -12,12 +12,25 @@
   <name>conference: Rest Client Module</name>
   
   <dependencies>
+	
 	<dependency>
 		<groupId>com.prodyna.conference</groupId>
-		<artifactId>conference-ejb-client</artifactId>
+		<artifactId>conference-model</artifactId>
 		<scope>provided</scope>
-		<version>${project.version}</version>
 	</dependency>
+	
+	<dependency>
+	   	<groupId>com.prodyna.conference</groupId>
+	   	<artifactId>conference-ejb</artifactId>
+	   	<type>ejb</type>
+	   	<scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+	   	<groupId>com.prodyna.conference</groupId>
+	   	<artifactId>conference-ejb-client</artifactId>
+	   	<scope>provided</scope>
+    </dependency>
 	
 	<!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
      <dependency>
@@ -32,6 +45,7 @@
       <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
       <scope>provided</scope>
    </dependency>
+
   </dependencies>
   
 </project>

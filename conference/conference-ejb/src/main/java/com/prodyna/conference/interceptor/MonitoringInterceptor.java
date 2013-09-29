@@ -1,12 +1,11 @@
 package com.prodyna.conference.interceptor;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+
+import org.slf4j.Logger;
 
 @Interceptor
 @Monitored
@@ -26,7 +25,7 @@ public class MonitoringInterceptor {
 
 		long time = System.currentTimeMillis() - start;
 
-		logger.log(Level.INFO, "called {" + time + "}: "
+		logger.info("called {" + time + "}: "
 				+ ic.getTarget().getClass().getSimpleName() + "."
 				+ ic.getMethod().getName() + "() with params: "
 				+ ic.getParameters().toString() + " >>> " + proceed.toString());
