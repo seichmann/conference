@@ -25,10 +25,25 @@ public class MonitoringInterceptor {
 
 		long time = System.currentTimeMillis() - start;
 
-		logger.info("called {" + time + "}: "
+		String parameters = ic.getParameters().length > 0 ? getCommaSeparatedList(ic
+				.getParameters()) : "";
+		String result = proceed != null ? proceed.toString() : "";
+
+		logger.info("called [Time: " + time + "]: "
 				+ ic.getTarget().getClass().getSimpleName() + "."
-				+ ic.getMethod().getName() + "() with params: "
-				+ ic.getParameters().toString() + " >>> " + proceed.toString());
+				+ ic.getMethod().getName() + "() with params: " + parameters
+				+ " >>> " + result);
 		return proceed;
+	}
+
+	private String getCommaSeparatedList(Object[] parameters) {
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < parameters.length; i++) {
+			result.append(parameters[i].toString());
+			if (i < parameters.length - 1) {
+				result.append(",");
+			}
+		}
+		return result.toString();
 	}
 }

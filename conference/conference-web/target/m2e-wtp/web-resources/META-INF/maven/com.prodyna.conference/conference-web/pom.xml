@@ -30,13 +30,27 @@
 
    <dependencies>
 
+    <dependency>  
+        <groupId>org.primefaces</groupId>  
+        <artifactId>primefaces</artifactId>  
+        <version>4.0</version>  
+    </dependency>  
+    
       <!-- Dependency on the EJB module so we can use it's services if needed -->
       <dependency>
          <groupId>com.prodyna.conference</groupId>
-         <artifactId>conference-ejb</artifactId>
-         <type>ejb</type>
+         <artifactId>conference-ejb-client</artifactId>
+         <type>jar</type>
          <scope>provided</scope>
       </dependency>
+      
+      <dependency>
+         <groupId>com.prodyna.conference</groupId>
+         <artifactId>conference-model</artifactId>
+         <type>jar</type>
+         <scope>provided</scope>
+      </dependency>
+      
 
       <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
       <dependency>
@@ -45,6 +59,12 @@
          <scope>provided</scope>
       </dependency>
       
+      <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+      </dependency>
+        
       <!-- Import the JSF API, we use provided scope as the API is included in JBoss AS 7 -->
       <dependency>
          <groupId>org.jboss.spec.javax.faces</groupId>
@@ -73,7 +93,6 @@
                </exclusion>
            </exclusions>
        </dependency>
-
    </dependencies>
 
    <build>

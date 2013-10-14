@@ -8,5 +8,14 @@
         <dependent-module archiveName="conference-ejb.jar" deploy-path="/" handle="module:/resource/conference-ejb/conference-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="conference-model.jar" deploy-path="/lib" handle="module:/resource/conference-model/conference-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="conference-ejb-client.jar" deploy-path="/lib" handle="module:/resource/conference-ejb-client/conference-ejb-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="conference-rest-client.jar" deploy-path="/lib" handle="module:/resource/conference-rest-client/conference-rest-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

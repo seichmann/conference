@@ -28,8 +28,15 @@
       <jta-data-source>java:jboss/datasources/ConferenceDS</jta-data-source>
       <properties>
          <!-- Properties for Hibernate -->
-         <property name="hibernate.hbm2ddl.auto" value="create" />
+         <property name="hibernate.hbm2ddl.auto" value="update" />
          <property name="hibernate.show_sql" value="true" />
       </properties>
+      
+      <class>com.prodyna.conference.model.Conference</class>
+      <class>com.prodyna.conference.model.Talk</class>
+      <class>com.prodyna.conference.model.Speaker</class>
+      <class>com.prodyna.conference.model.Room</class>
+      <class>com.prodyna.conference.model.TalkSpeakerRelation</class>
+      
    </persistence-unit>
 </persistence>

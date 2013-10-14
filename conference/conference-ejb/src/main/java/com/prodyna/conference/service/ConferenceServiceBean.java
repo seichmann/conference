@@ -21,4 +21,19 @@ public class ConferenceServiceBean implements ConferenceService {
 		return em.createNamedQuery("Conference.All", Conference.class)
 				.getResultList();
 	}
+
+	@Override
+	public Conference saveConference(Conference conference) {
+		return em.merge(conference);
+	}
+
+	@Override
+	public void deleteConference(Conference conference) {
+		Conference loadedConference = em.find(Conference.class,
+				conference.getId());
+
+		if (loadedConference != null) {
+			em.remove(loadedConference);
+		}
+	}
 }

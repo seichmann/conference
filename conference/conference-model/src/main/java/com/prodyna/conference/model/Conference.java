@@ -2,13 +2,16 @@ package com.prodyna.conference.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -16,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @Table(name = "conference")
-@NamedQueries({ @NamedQuery(name = "Conference.all", query = "SELECT c FROM Conference c") })
+@NamedQueries({ @NamedQuery(name = "Conference.All", query = "SELECT c FROM Conference c") })
 public class Conference implements Serializable {
 
 	private static final long serialVersionUID = -5658361400889833148L;
@@ -34,6 +37,17 @@ public class Conference implements Serializable {
 	private Date start;
 
 	private Date end;
+
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Talk> talks;
+
+	public List<Talk> getTalks() {
+		return talks;
+	}
+
+	public void setTalks(List<Talk> talks) {
+		this.talks = talks;
+	}
 
 	public Long getId() {
 		return id;

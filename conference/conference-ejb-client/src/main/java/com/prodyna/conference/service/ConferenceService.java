@@ -8,4 +8,7 @@ public interface ConferenceService {
 
 	List<Conference> getAllConferences();
 
+	void deleteConference(Conference conference);
+
+	Conference saveConference(Conference conference);
 }
