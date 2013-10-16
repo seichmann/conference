@@ -9,9 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,7 +38,7 @@ public class Conference implements Serializable {
 
 	private Date end;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Talk> talks;
 
 	public List<Talk> getTalks() {
@@ -112,5 +112,12 @@ public class Conference implements Serializable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Conference [id=" + id + ", name=" + name + ", description="
+				+ description + ", start=" + start + ", end=" + end
+				+ ", talks=" + talks + "]";
 	}
 }
