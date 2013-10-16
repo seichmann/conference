@@ -1,0 +1,57 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:ui='http://java.sun.com/jsf/facelets'
+	xmlns:h='http://java.sun.com/jsf/html'
+	xmlns:f='http://java.sun.com/jsf/core'
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template='/template/common.xhtml'>
+
+	<ui:define name='pageTitle'>
+		<h:outputText value='Talk Administration' />
+	</ui:define>
+
+	<ui:define name='content'>
+		<h:form id="form">
+
+			<p:dataTable value="#{roomController.getList()}" var="item" id="roomTable" rowKey="#{item.id}"  
+                selectionMode="single" editable="true" widgetVar="roomTable">
+
+ 			 	<p:ajax event="rowSelect" listener="#{roomController.onRowSelect}"   
+                    update=":form:panelGrid :form:messages"/>  
+       		 	<p:ajax event="rowUnselect" listener="#{roomController.onRowUnselect}" update=":form:panelGrid :form:messages"/>  
+        
+				<p:column headerText="Name">
+					<h:outputText value="#{item.name}" />
+				</p:column>
+
+				<p:column headerText="Capacity">
+					<h:outputText value="#{item.capacity}" />
+				</p:column>
+			</p:dataTable>	
+			
+			<p:messages id="messages" autoUpdate="true" />  
+			
+			<h:panelGrid columns="3" cellpadding="2">  
+				<p:commandButton action="#{roomController.createNew()}" update=":form"
+					value="New" icon="ui-icon-check" style="margin:0" oncomplete="roomTable.unselectAllRows()"/>
+					
+				<p:commandButton action="#{roomController.save()}" update=":form"
+					value="Save" icon="ui-icon-check" style="margin:0" />
+					
+				<p:commandButton action="#{roomController.delete()}" update=":form"
+					value="Delete" icon="ui-icon-check" style="margin:0" />
+			</h:panelGrid>
+			
+			<p:panelGrid columns="2" id="panelGrid">
+				<f:facet name="header">
+				</f:facet>
+				<h:outputLabel for="name" value="Enter name" />
+				<p:inputText id="name" value="#{roomController.editRoom.name}" required="true" />
+				 
+				<h:outputLabel for="capacity" value="Enter capacity" />
+				<p:inputMask id="capacity" value="#{roomController.editRoom.capacity}"  mask="9?999" maxlength="4" required="true" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

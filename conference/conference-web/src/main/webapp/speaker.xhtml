@@ -1,0 +1,57 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:ui='http://java.sun.com/jsf/facelets'
+	xmlns:h='http://java.sun.com/jsf/html'
+	xmlns:f='http://java.sun.com/jsf/core'
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template='/template/common.xhtml'>
+
+	<ui:define name='pageTitle'>
+		<h:outputText value='Speaker Administration' />
+	</ui:define>
+
+	<ui:define name='content'>
+		<h:form id="form">
+
+			<p:dataTable value="#{speakerController.getList()}" var="item" id="speakerTable" rowKey="#{item.id}"  
+                selectionMode="single" editable="true" widgetVar="speakerTable">
+
+ 			 	<p:ajax event="rowSelect" listener="#{speakerController.onRowSelect}"   
+                    update=":form:panelGrid"/>  
+       		 	<p:ajax event="rowUnselect" listener="#{speakerController.onRowUnselect}" update=":form:messages"/>  
+        
+				<p:column headerText="Name">
+					<h:outputText value="#{item.name}" />
+				</p:column>
+
+				<p:column headerText="Description">
+					<h:outputText value="#{item.description}" />
+				</p:column>
+			</p:dataTable>	
+			
+			<p:messages id="messages" autoUpdate="true" />  
+			
+			<h:panelGrid columns="3" cellpadding="2">  
+				<p:commandButton action="#{speakerController.createNew()}" update=":form"
+					value="New" icon="ui-icon-check" style="margin:0" oncomplete="speakerTable.unselectAllRows()"/>
+					
+				<p:commandButton action="#{speakerController.save()}" update=":form"
+					value="Save" icon="ui-icon-check" style="margin:0" />
+					
+				<p:commandButton action="#{speakerController.delete()}" update=":form"
+					value="Delete" icon="ui-icon-check" style="margin:0" />
+			</h:panelGrid>
+			
+			<p:panelGrid columns="2" id="panelGrid">
+				<f:facet name="header">
+				</f:facet>
+				<h:outputLabel for="name" value="Enter name" />
+				<p:inputText id="name" value="#{speakerController.editSpeaker.name}" required="true" />
+				 
+				<h:outputLabel for="description" value="Enter description" />
+				<p:inputText id="description" value="#{speakerController.editSpeaker.description}" required="true"/>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

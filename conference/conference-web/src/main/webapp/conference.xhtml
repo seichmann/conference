@@ -1,0 +1,93 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:ui='http://java.sun.com/jsf/facelets'
+	xmlns:h='http://java.sun.com/jsf/html'
+	xmlns:f='http://java.sun.com/jsf/core'
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template='/template/common.xhtml'>
+
+	<ui:define name='pageTitle'>
+		<h:outputText value='Conference Administration' />
+	</ui:define>
+
+	<ui:define name='content'>
+		<h:form id="form">
+			<p:dataTable value="#{conferenceController.getList()}" var="item" id="conferenceTable" rowKey="#{item.id}"  
+                selectionMode="single" editable="true" widgetVar="conferenceTable">
+
+ 			 	<p:ajax event="rowSelect" listener="#{conferenceController.onRowSelect}"   
+                    update=":form:panelGrid :form:messages"/>  
+       		 	<p:ajax event="rowUnselect" listener="#{conferenceController.onRowUnselect}" update=":form:panelGrid "/>  
+        
+				<p:column headerText="Name">
+					<h:outputText value="#{item.name}" />
+				</p:column>
+
+				<p:column headerText="Description">
+					<h:outputText value="#{item.description}" />
+				</p:column>
+				
+				<p:column headerText="Start">
+					<h:outputText value="#{item.start}">
+					  <f:convertDateTime pattern="dd.MM.yyyy" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="End">
+					<h:outputText value="#{item.end}">
+						  <f:convertDateTime pattern="dd.MM.yyyy" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>	
+			
+			<p:messages id="messages" autoUpdate="true" />  
+			
+			<h:panelGrid columns="3" cellpadding="2">  
+				<p:commandButton action="#{conferenceController.createNew()}" update=":form"
+					value="New" icon="ui-icon-check" style="margin:0" oncomplete="conferenceTable.unselectAllRows()"/>
+					
+				<p:commandButton action="#{conferenceController.save()}" update=":form"
+					value="Save" icon="ui-icon-check" style="margin:0" />
+					
+				<p:commandButton action="#{conferenceController.delete()}" update=":form"
+					value="Delete" icon="ui-icon-check" style="margin:0" />
+			</h:panelGrid>
+			
+			<p:panelGrid columns="2" id="panelGrid" style="width:100%">
+				<f:facet name="header">
+				</f:facet>
+				<h:outputLabel for="name" value="Enter name" />
+				<p:inputText id="name" value="#{conferenceController.editConference.name}" required="true" />
+				 
+				<h:outputLabel for="description" value="Enter description" />
+				<p:inputText id="description" value="#{conferenceController.editConference.description}" required="true"/>
+
+				<h:outputLabel for="start" value="Enter start" />
+				<p:calendar id="start" value="#{conferenceController.editConference.start}" pattern="dd.MM.yyyy" required="true"/>
+				
+				<h:outputLabel for="end" value="Enter End" />
+				<p:calendar id="end" value="#{conferenceController.editConference.end}" pattern="dd.MM.yyyy" required="true"/>
+				
+				<h:outputLabel for="talks" value="Assigned Talks" />
+				<p:selectManyMenu id="talks" value="#{conferenceController.editConference.talks}" style="width:100%;height:200px" var="t" showCheckbox="true" converter="talkConverter">  
+		            <f:selectItems value="#{conferenceController.loadTalks()}" var="talk" itemLabel="#{talk.name}" itemValue="#{talk}" />  
+		   			<f:attribute name="collectionType" value="java.util.ArrayList" />
+		   			
+		            <p:column>  
+		                #{t.name} - #{t.description}
+		            </p:column>  
+		            
+		            <p:column>
+		            	[<h:outputText value="#{t.start}">
+						  <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+						</h:outputText> - 
+						<h:outputText value="#{t.end}">
+						  <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+						</h:outputText>]
+		            </p:column>
+        		</p:selectManyMenu> 
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
