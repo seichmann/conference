@@ -16,6 +16,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.LazyCollection;
@@ -43,8 +45,12 @@ public class Talk implements Serializable {
 
 	private String description;
 
+	@Future
+	@NotNull
 	private Date start;
 
+	@Future
+	@NotNull
 	private Date end;
 
 	@Transient

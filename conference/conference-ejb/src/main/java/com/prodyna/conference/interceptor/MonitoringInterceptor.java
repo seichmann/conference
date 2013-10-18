@@ -7,12 +7,17 @@ import javax.interceptor.InvocationContext;
 
 import org.slf4j.Logger;
 
+import com.prodyna.conference.mbean.PerformanceMXBean;
+
 @Interceptor
 @Monitored
 public class MonitoringInterceptor {
 
 	@Inject
 	private Logger logger;
+
+	@Inject
+	private PerformanceMXBean performance;
 
 	public MonitoringInterceptor() {
 	}
@@ -29,10 +34,14 @@ public class MonitoringInterceptor {
 				.getParameters()) : "";
 		String result = proceed != null ? proceed.toString() : "";
 
-		logger.info("called [Time: " + time + "]: "
-				+ ic.getTarget().getClass().getSimpleName() + "."
-				+ ic.getMethod().getName() + "() with params: " + parameters
-				+ " >>> " + result);
+		String service = ic.getTarget().getClass().getSimpleName();
+		String method = ic.getMethod().getName();
+		logger.info("called [Time: " + time + "]: " + service + "." + method
+				+ "() with params: " + parameters + " >>> " + result);
+
+		// JMX Statistics
+		performance.report(service, method, time);
+
 		return proceed;
 	}
 

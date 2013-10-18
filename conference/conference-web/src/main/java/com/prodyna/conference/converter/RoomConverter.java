@@ -23,7 +23,7 @@ public class RoomConverter implements Converter, Serializable {
 		Application application = FacesContext.getCurrentInstance()
 				.getApplication();
 		List<Room> allRooms = (List<Room>) application.evaluateExpressionGet(
-				context, "#{RoomController.allRooms}", ArrayList.class);
+				context, "#{talkController.allRooms}", ArrayList.class);
 
 		// Convert to object
 		if (value != null && !value.trim().isEmpty()) {

@@ -1,7 +1,6 @@
 package com.prodyna.conference.test;
 
 import java.lang.management.ManagementFactory;
-import java.util.List;
 
 import javax.management.AttributeNotFoundException;
 import javax.management.InstanceAlreadyExistsException;
@@ -12,12 +11,12 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
+import javax.management.openmbean.CompositeData;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.prodyna.conference.mbean.Entry;
 import com.prodyna.conference.mbean.Performance;
 
 public class PerformanceTest {
@@ -40,8 +39,8 @@ public class PerformanceTest {
 		int count = (Integer) ms.getAttribute(on, "Count");
 		Assert.assertEquals(1, count);
 
-		List<Entry> all = (List<Entry>) ms.getAttribute(on, "All");
-		Assert.assertEquals(1, all.size());
+		CompositeData[] all = (CompositeData[]) ms.getAttribute(on, "All");
+		Assert.assertEquals(1, all[0].values().size());
 		ms.unregisterMBean(on);
 	}
 }

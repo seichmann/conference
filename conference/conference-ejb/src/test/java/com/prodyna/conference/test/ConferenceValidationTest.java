@@ -29,15 +29,15 @@ public class ConferenceValidationTest extends AbstractDeployableTest {
 		Talk talk1 = new Talk();
 		talk1.setName("Java EE6");
 		talk1.setDescription("JPA, CDI, EJB");
-		talk1.setStart(DateUtil.parseHourMinute("01.05.2013 12:30"));
-		talk1.setEnd(DateUtil.parseHourMinute("01.05.2013 14:30"));
+		talk1.setStart(DateUtil.parseHourMinute("01.05.2015 12:30"));
+		talk1.setEnd(DateUtil.parseHourMinute("01.05.2015 14:30"));
 		Talk saveTalk1 = talkService.saveTalk(talk1);
 
 		Conference conference = new Conference();
 		conference.setName("Prodyna Hausmesser");
 		conference.setDescription("Best of the best.");
-		conference.setStart(DateUtil.parse("01.07.2013"));
-		conference.setEnd(DateUtil.parse("01.07.2013"));
+		conference.setStart(DateUtil.parse("01.07.2015"));
+		conference.setEnd(DateUtil.parse("01.07.2015"));
 		List<Talk> talks = new ArrayList<Talk>();
 		talks.add(saveTalk1);
 		conference.setTalks(talks);

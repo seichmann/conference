@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-public class Performance implements PerformanceMBean {
+@ApplicationScoped
+public class Performance implements PerformanceMXBean {
 
 	private Map<String, Entry> entries = new HashMap<String, Entry>();
 
@@ -30,11 +32,14 @@ public class Performance implements PerformanceMBean {
 	public Entry getWorstByTime() {
 		Entry maxEntry = null;
 		if (entries.size() > 0) {
-			maxEntry = entries.get(0);
-			for (int i = 1; i < entries.size(); i++) {
-				Entry entry = entries.get(i);
-				if (entry.getMaxTime() > maxEntry.getMaxTime()) {
-					maxEntry = entry;
+			for (java.util.Map.Entry<String, Entry> entry : entries.entrySet()) {
+				if (maxEntry == null) {
+					maxEntry = entry.getValue();
+					continue;
+				}
+
+				if (entry.getValue().getMaxTime() > maxEntry.getMaxTime()) {
+					maxEntry = entry.getValue();
 				}
 			}
 		}
@@ -45,11 +50,14 @@ public class Performance implements PerformanceMBean {
 	public Entry getWorstByAverage() {
 		Entry avgEntry = null;
 		if (entries.size() > 0) {
-			avgEntry = entries.get(0);
-			for (int i = 1; i < entries.size(); i++) {
-				Entry entry = entries.get(i);
-				if (entry.getAverage() > avgEntry.getAverage()) {
-					avgEntry = entry;
+			for (java.util.Map.Entry<String, Entry> entry : entries.entrySet()) {
+				if (avgEntry == null) {
+					avgEntry = entry.getValue();
+					continue;
+				}
+
+				if (entry.getValue().getAverage() > avgEntry.getAverage()) {
+					avgEntry = entry.getValue();
 				}
 			}
 		}
@@ -60,11 +68,14 @@ public class Performance implements PerformanceMBean {
 	public Entry getWorstByCount() {
 		Entry countEntry = null;
 		if (entries.size() > 0) {
-			countEntry = entries.get(0);
-			for (int i = 1; i < entries.size(); i++) {
-				Entry entry = entries.get(i);
-				if (entry.getCount() < countEntry.getCount()) {
-					countEntry = entry;
+			for (java.util.Map.Entry<String, Entry> entry : entries.entrySet()) {
+				if (countEntry == null) {
+					countEntry = entry.getValue();
+					continue;
+				}
+
+				if (entry.getValue().getAverage() < countEntry.getAverage()) {
+					countEntry = entry.getValue();
 				}
 			}
 		}
@@ -94,7 +105,7 @@ public class Performance implements PerformanceMBean {
 
 		CSVBuilder builder = new CSVBuilder();
 		// Header
-		builder.appendCell("Service").appendCell("Method")
+		builder.appendCell("Service").appendCell("Method").appendCell("Count")
 				.appendCell("MaxTime").appendCell("MinTime")
 				.appendCell("Avg.Time").newLine();
 
@@ -103,6 +114,7 @@ public class Performance implements PerformanceMBean {
 			Entry value = entry.getValue();
 			builder.appendCell(value.getService())
 					.appendCell(value.getMethod())
+					.appendCell(String.valueOf(value.getCount()))
 					.appendCell(String.valueOf(value.getMaxTime()))
 					.appendCell(String.valueOf(value.getMinTime()))
 					.appendCell(String.valueOf(value.getAverage())).newLine();

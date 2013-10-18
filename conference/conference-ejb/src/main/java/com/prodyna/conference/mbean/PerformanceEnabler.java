@@ -18,7 +18,7 @@ import javax.management.ObjectName;
 public class PerformanceEnabler {
 
 	@Inject
-	private Performance bean;
+	private PerformanceMXBean bean;
 
 	/**
 	 * Default constructor.

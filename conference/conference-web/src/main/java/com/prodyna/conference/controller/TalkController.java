@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
@@ -28,7 +29,7 @@ public class TalkController extends AbstractController {
 	 */
 	private static final long serialVersionUID = 7079315195760451446L;
 
-	@EJB
+	@Inject
 	private TalkService talkService;
 
 	@EJB
@@ -139,5 +140,4 @@ public class TalkController extends AbstractController {
 	public void setAllSpeakers(Set<Speaker> allSpeakers) {
 		this.allSpeakers = allSpeakers;
 	}
-
 }

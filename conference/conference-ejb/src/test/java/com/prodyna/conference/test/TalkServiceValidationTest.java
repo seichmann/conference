@@ -41,8 +41,8 @@ public class TalkServiceValidationTest extends AbstractDeployableTest {
 		Talk talk1 = new Talk();
 		talk1.setName("Java EE6");
 		talk1.setDescription("JPA, CDI, EJB");
-		talk1.setStart(DateUtil.parseHourMinute("01.05.2013 12:30"));
-		talk1.setEnd(DateUtil.parseHourMinute("01.05.2013 14:30"));
+		talk1.setStart(DateUtil.parseHourMinute("01.05.2015 12:30"));
+		talk1.setEnd(DateUtil.parseHourMinute("01.05.2015 14:30"));
 		Set<Speaker> speakers = new HashSet<Speaker>();
 		speakers.add(saveSpeaker);
 		talk1.setSpeakers(speakers);
@@ -51,8 +51,8 @@ public class TalkServiceValidationTest extends AbstractDeployableTest {
 		Talk talk2 = new Talk();
 		talk2.setName("Spring");
 		talk2.setDescription("Ecosystem");
-		talk2.setStart(DateUtil.parseHourMinute("01.05.2013 13:30"));
-		talk2.setEnd(DateUtil.parseHourMinute("01.05.2013 15:30"));
+		talk2.setStart(DateUtil.parseHourMinute("01.05.2015 13:30"));
+		talk2.setEnd(DateUtil.parseHourMinute("01.05.2015 15:30"));
 		talk2.setSpeakers(speakers);
 		Talk saveTalk2 = talkService.saveTalk(talk2);
 	}
@@ -69,16 +69,16 @@ public class TalkServiceValidationTest extends AbstractDeployableTest {
 		Talk talk1 = new Talk();
 		talk1.setName("Java EE6 2");
 		talk1.setDescription("JPA, CDI, EJB");
-		talk1.setStart(DateUtil.parseHourMinute("01.05.2013 10:30"));
-		talk1.setEnd(DateUtil.parseHourMinute("01.05.2013 12:30"));
+		talk1.setStart(DateUtil.parseHourMinute("01.05.2015 10:30"));
+		talk1.setEnd(DateUtil.parseHourMinute("01.05.2015 12:30"));
 		talk1.setRoom(saveRoom);
 		Talk saveTalk1 = talkService.saveTalk(talk1);
 
 		Talk talk2 = new Talk();
 		talk2.setName("Spring 2");
 		talk2.setDescription("Ecosystem");
-		talk2.setStart(DateUtil.parseHourMinute("01.05.2013 11:30"));
-		talk2.setEnd(DateUtil.parseHourMinute("01.05.2013 15:30"));
+		talk2.setStart(DateUtil.parseHourMinute("01.05.2015 11:30"));
+		talk2.setEnd(DateUtil.parseHourMinute("01.05.2015 15:30"));
 		talk2.setRoom(saveRoom);
 		Talk saveTalk2 = talkService.saveTalk(talk2);
 	}

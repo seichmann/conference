@@ -2,7 +2,7 @@ package com.prodyna.conference.mbean;
 
 import java.util.List;
 
-public interface PerformanceMBean {
+public interface PerformanceMXBean {
 	public void reset();
 
 	public List<Entry> getAll();
