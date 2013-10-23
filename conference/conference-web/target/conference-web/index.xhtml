@@ -7,11 +7,46 @@
 <ui:composition template='/template/common.xhtml'>
 
 	<ui:define name='pageTitle'>
-		<h:outputText value='Conference Application' />
+		<h:outputText value='#{labels.application_title}' />
 	</ui:define>
 
 	<ui:define name='content'>
-		<p:spacer style="width: 100%; height: 100%"/>
+    <h:form id="form">
+	<p:remoteCommand onstart="#{conferenceOverviewController.loadTreeData()}"  />
+
+	<p:treeTable id="treetable" value="#{conferenceOverviewController.root}" var="c">  
+        <f:facet name="header">  
+            #{labels.application_title}
+        </f:facet>  
+  
+        <p:column style="width:20%">  
+            <f:facet name="header">  
+                Name 
+            </f:facet>  
+            <h:outputText value="#{c.name}" />  
+        </p:column>  
+  
+        <p:column style="width:10%">  
+            <f:facet name="header">  
+                Talk Count  
+            </f:facet>  
+            <h:outputText value="#{c.talkCount}" />  
+        </p:column>  
+  
+        <p:column style="width:80%">  
+            <f:facet name="header">  
+                 Talk Details 
+            </f:facet>  
+            <h:outputText value="#{c.talkDetails}" />  
+        </p:column>  
+  
+        <p:column style="width:4%">  
+        		<h:commandLink action="#{navigationOverviewController.open(c.talkId)}" title="View Talk" styleClass="ui-icon ui-icon-search" style="font-weight:bold"
+                             rendered="#{not empty c.talkId}" immediate="true">
+                </h:commandLink>
+        </p:column>  
+   	 </p:treeTable>  
+ 	</h:form>
 	</ui:define>
 </ui:composition>
 </html>

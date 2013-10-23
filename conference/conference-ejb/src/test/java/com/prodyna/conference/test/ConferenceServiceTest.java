@@ -23,6 +23,12 @@ import com.prodyna.conference.service.SpeakerService;
 import com.prodyna.conference.service.TalkService;
 import com.prodyna.conference.util.DateUtil;
 
+/**
+ * CRUD-Test.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 public class ConferenceServiceTest extends AbstractDeployableTest {
 
 	@Inject

@@ -7,11 +7,20 @@ import javax.inject.Inject;
 
 import com.prodyna.conference.exception.DefaultExceptionHandler;
 
+/**
+ * Abstract base class for all controllers.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 public class AbstractController implements Serializable {
+
+	protected static final String NULL_VALUE = "-";
 
 	@Inject
 	protected DefaultExceptionHandler exceptionHandler;
-	
+
 	@Inject
-	private FacesContext facesContext;
+	protected FacesContext facesContext;
+
 }

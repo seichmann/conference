@@ -1,11 +1,10 @@
-package com.prodyna.conference.controller;
+package com.prodyna.conference.controller.admin;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,6 +12,7 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
+import com.prodyna.conference.controller.AbstractController;
 import com.prodyna.conference.model.Room;
 import com.prodyna.conference.model.Speaker;
 import com.prodyna.conference.model.Talk;
@@ -20,6 +20,12 @@ import com.prodyna.conference.service.RoomService;
 import com.prodyna.conference.service.SpeakerService;
 import com.prodyna.conference.service.TalkService;
 
+/**
+ * CRUD View for entity {@link Talk}.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @Named(value = "talkController")
 @SessionScoped
 public class TalkController extends AbstractController {
@@ -32,10 +38,10 @@ public class TalkController extends AbstractController {
 	@Inject
 	private TalkService talkService;
 
-	@EJB
+	@Inject
 	private SpeakerService speakerService;
 
-	@EJB
+	@Inject
 	private RoomService roomService;
 
 	private Talk editTalk;
@@ -78,11 +84,7 @@ public class TalkController extends AbstractController {
 
 		// Load Lazy Collection
 		try {
-			if (editTalk.getSpeakers().size() > 0) {
-				editTalk = talkService.loadTalkEager(editTalk);
-			} else {
-				editTalk.setSpeakers(new HashSet<Speaker>());
-			}
+			editTalk = talkService.loadTalkEager(editTalk);
 		} catch (Throwable t) {
 			exceptionHandler.handle(t);
 		}
@@ -116,7 +118,8 @@ public class TalkController extends AbstractController {
 		return allRooms;
 	}
 
-	// Getter / Setter
+	// **************** GETTER / SETTER *****************/
+
 	public Talk getEditTalk() {
 		return editTalk;
 	}

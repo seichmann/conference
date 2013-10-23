@@ -15,11 +15,12 @@ import com.prodyna.conference.event.TalkChanged;
 import com.prodyna.conference.producer.QueueSender;
 
 /**
- * Message-Driven Bean implementation class for: MailSendingHelloMDB
+ * Message-Driven Bean implementation class for: TalkNotificationReceiver
  */
 @MessageDriven(activationConfig = {
 		@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-		@ActivationConfigProperty(propertyName = "destination", propertyValue = QueueSender.QUEUE_TALK) })
+		@ActivationConfigProperty(propertyName = "destination", propertyValue = QueueSender.QUEUE_TALK),
+		@ActivationConfigProperty(propertyName = "reconnectAttempts", propertyValue = "-1") })
 public class TalkNotificationReceiver implements MessageListener {
 
 	@Inject

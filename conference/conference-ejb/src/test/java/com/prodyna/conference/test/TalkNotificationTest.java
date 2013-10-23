@@ -13,6 +13,12 @@ import com.prodyna.conference.model.Talk;
 import com.prodyna.conference.service.TalkService;
 import com.prodyna.conference.util.DateUtil;
 
+/**
+ * Messaging Test.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 public class TalkNotificationTest extends AbstractDeployableTest {
 
 	@Inject

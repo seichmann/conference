@@ -12,6 +12,13 @@ import javax.faces.convert.FacesConverter;
 
 import com.prodyna.conference.model.Room;
 
+/**
+ * Converts from Room.id to entity {@link Room}. Uses cached data from
+ * controller instance.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @FacesConverter(value = "roomConverter")
 public class RoomConverter implements Converter, Serializable {
 

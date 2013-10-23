@@ -31,6 +31,9 @@ public class DateUtil {
 	private static final SimpleDateFormat HOUR_MINUTE_FORMAT_PROTOTYPE = new SimpleDateFormat(
 			"dd.MM.yyyy k:mm");
 
+	private static final SimpleDateFormat HOUR_MINUTE_SMALL_PROTOTYPE = new SimpleDateFormat(
+			"k:mm");
+
 	/**
 	 * Gibt das Datum als formatierten String "dd.MM.yyyy" zurück.
 	 * 
@@ -40,6 +43,36 @@ public class DateUtil {
 	public static String format(Date date) {
 		if (date != null) {
 			return ((SimpleDateFormat) DEFAULT_FORMAT_PROTOTYPE.clone())
+					.format(date);
+		}
+
+		return "";
+	}
+
+	/**
+	 * Gibt das Datum als formatierten String "dd.MM.yyyy k:mm" zurück.
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String formatHourMinute(Date date) {
+		if (date != null) {
+			return ((SimpleDateFormat) HOUR_MINUTE_FORMAT_PROTOTYPE.clone())
+					.format(date);
+		}
+
+		return "";
+	}
+
+	/**
+	 * Gibt das Datum als formatierten String "k:mm" zurück.
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String formatHourMinuteSmall(Date date) {
+		if (date != null) {
+			return ((SimpleDateFormat) HOUR_MINUTE_SMALL_PROTOTYPE.clone())
 					.format(date);
 		}
 

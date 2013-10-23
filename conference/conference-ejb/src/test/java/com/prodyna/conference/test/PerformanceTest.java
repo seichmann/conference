@@ -19,6 +19,12 @@ import org.junit.Test;
 
 import com.prodyna.conference.mbean.Performance;
 
+/**
+ * JMX-Management Bean Test.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 public class PerformanceTest {
 
 	@Test

@@ -12,6 +12,13 @@ import javax.faces.convert.FacesConverter;
 
 import com.prodyna.conference.model.Speaker;
 
+/**
+ * Converts from Speaker.id to entity {@link Speaker}. Uses cached data from
+ * controller instance.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @FacesConverter(value = "speakerConverter")
 public class SpeakerConverter implements Converter, Serializable {
 

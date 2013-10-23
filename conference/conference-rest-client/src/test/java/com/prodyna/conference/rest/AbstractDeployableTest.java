@@ -8,6 +8,14 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.impl.base.filter.ExcludeRegExpPaths;
 import org.junit.runner.RunWith;
 
+/**
+ * Abstract base class for all Tests.
+ * 
+ * Handle deployment.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @RunWith(Arquillian.class)
 public abstract class AbstractDeployableTest {
 

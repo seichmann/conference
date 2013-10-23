@@ -21,28 +21,43 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import com.prodyna.conference.model.Conference;
 import com.prodyna.conference.model.Talk;
 import com.prodyna.conference.service.ConferenceService;
 import com.prodyna.conference.service.exception.ConferenceServiceException;
 
-@Path("/conferences")
+/**
+ * REST-Implementation for {@link ConferenceService}.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
+@Path("/conference")
 @RequestScoped
 public class ConferenceServiceREST {
 
 	@Inject
 	private ConferenceService service;
 
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Conference saveConference(Conference conference)
+			throws ConferenceServiceException {
+		return service.saveConference(conference);
+		// return Response.ok(service.saveConference(conference)).build();
+	}
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Conference> listAllConferences() {
+	public List<Conference> getAllConferences() {
 		List<Conference> conferences = service.getAllConferences();
 		for (Conference conference : conferences) {
 			for (Talk talk : conference.getTalks()) {
@@ -52,12 +67,11 @@ public class ConferenceServiceREST {
 		return conferences;
 	}
 
-	@POST
+	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response saveConference(Conference conference)
-			throws ConferenceServiceException {
-		return Response.ok(service.saveConference(conference)).build();
+	public void deleteConference(Conference conference) {
+		service.deleteConference(conference);
 	}
 
 }

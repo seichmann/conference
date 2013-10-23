@@ -18,6 +18,12 @@ import com.prodyna.conference.producer.QueueSender.MessageCreatorCallback;
 import com.prodyna.conference.service.TalkService;
 import com.prodyna.conference.service.exception.ConferenceServiceException;
 
+/**
+ * Decorator for sending messages on talk modification.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @Decorator
 public class TalkServiceBeanDecorator implements TalkService {
 
@@ -32,6 +38,11 @@ public class TalkServiceBeanDecorator implements TalkService {
 	private QueueSender queueSender;
 
 	public TalkServiceBeanDecorator() {
+	}
+
+	@Override
+	public List<Talk> getTalksByRoom(Long roomId) {
+		return talkService.getTalksByRoom(roomId);
 	}
 
 	@Override
@@ -80,20 +91,33 @@ public class TalkServiceBeanDecorator implements TalkService {
 		return newTalk;
 	}
 
+	@Override
+	public List<Talk> getTalksBySpeaker(Long speakerId) {
+		return talkService.getTalksBySpeaker(speakerId);
+	}
+
+	@Override
+	public Talk loadTalkEager(Long talkId) {
+		return talkService.loadTalkEager(talkId);
+	}
+
+	@Override
 	public List<Talk> getAllTalks() {
 		return talkService.getAllTalks();
 	}
 
+	@Override
 	public void deleteTalk(Talk talk) {
 		talkService.deleteTalk(talk);
 	}
 
+	@Override
 	public Talk loadTalkEager(Talk talk) {
 		return talkService.loadTalkEager(talk);
 	}
 
+	@Override
 	public List<Talk> getTalks(Date start, Date end) {
 		return talkService.getTalks(start, end);
 	}
-
 }

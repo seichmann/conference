@@ -15,6 +15,12 @@ import com.prodyna.conference.service.TalkService;
 import com.prodyna.conference.service.exception.ConferenceConstraintException;
 import com.prodyna.conference.util.DateUtil;
 
+/**
+ * Test for Validation Logic of Conference.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 public class ConferenceValidationTest extends AbstractDeployableTest {
 
 	@Inject

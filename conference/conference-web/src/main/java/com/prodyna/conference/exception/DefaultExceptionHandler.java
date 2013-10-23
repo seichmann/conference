@@ -8,6 +8,12 @@ import javax.inject.Named;
 
 import com.prodyna.conference.service.exception.ConferenceServiceException;
 
+/**
+ * Global Exception Handler for ServiceException in Client Layer.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @Named
 public class DefaultExceptionHandler implements Serializable {
 
@@ -18,6 +24,12 @@ public class DefaultExceptionHandler implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, m);
 	}
 
+	/**
+	 * Returns error message of root exception.
+	 * 
+	 * @param t
+	 * @return
+	 */
 	private String getRootErrorMessage(Throwable t) {
 		// Start with the exception and recurse to find the root cause
 		Throwable root = null;

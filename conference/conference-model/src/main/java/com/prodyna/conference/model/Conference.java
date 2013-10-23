@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,8 +35,10 @@ public class Conference implements Serializable {
 
 	private String description;
 
+	@Future
 	private Date start;
 
+	@Future
 	private Date end;
 
 	@ManyToMany(fetch = FetchType.EAGER)

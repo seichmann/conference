@@ -1,22 +1,25 @@
-package com.prodyna.conference.controller;
+package com.prodyna.conference.controller.admin;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
-import com.prodyna.conference.exception.DefaultExceptionHandler;
+import com.prodyna.conference.controller.AbstractController;
 import com.prodyna.conference.model.Speaker;
 import com.prodyna.conference.service.SpeakerService;
 
+/**
+ * CRUD View for entity {@link Speaker}.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @Named(value = "speakerController")
 @SessionScoped
 public class SpeakerController extends AbstractController {
@@ -26,7 +29,7 @@ public class SpeakerController extends AbstractController {
 	 */
 	private static final long serialVersionUID = 7079315195760451446L;
 
-	@EJB
+	@Inject
 	private SpeakerService speakerService;
 
 	private Speaker editSpeaker;
@@ -74,7 +77,7 @@ public class SpeakerController extends AbstractController {
 		editSpeaker = new Speaker();
 	}
 
-	// Getter / Setter
+	// **************** GETTER / SETTER *****************/
 	public Speaker getEditSpeaker() {
 		return editSpeaker;
 	}

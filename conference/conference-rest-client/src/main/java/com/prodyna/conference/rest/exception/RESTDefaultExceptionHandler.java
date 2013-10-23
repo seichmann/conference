@@ -5,6 +5,14 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+/**
+ * Global Exception Handler for REST-Interface.
+ * 
+ * Transforms Java-Exception to JSON-Response Objects.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @Provider
 public class RESTDefaultExceptionHandler implements ExceptionMapper<Exception> {
 

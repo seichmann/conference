@@ -1,30 +1,37 @@
-package com.prodyna.conference.controller;
+package com.prodyna.conference.controller.admin;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
+import com.prodyna.conference.controller.AbstractController;
 import com.prodyna.conference.model.Conference;
 import com.prodyna.conference.model.Talk;
 import com.prodyna.conference.service.ConferenceService;
 import com.prodyna.conference.service.TalkService;
 
+/**
+ * CRUD View for entity {@link Conference}.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @Named(value = "conferenceController")
 @SessionScoped
 public class ConferenceController extends AbstractController {
 
 	private static final long serialVersionUID = 7079315195760451446L;
 
-	@EJB
+	@Inject
 	private ConferenceService conferenceService;
 
-	@EJB
+	@Inject
 	private TalkService talkService;
 
 	private Conference editConference;
@@ -92,7 +99,7 @@ public class ConferenceController extends AbstractController {
 		return allTalks;
 	}
 
-	// Getter / Setter
+	// **************** GETTER / SETTER *****************/
 
 	public List<Talk> getAllTalks() {
 		return allTalks;

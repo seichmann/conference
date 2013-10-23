@@ -28,7 +28,9 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "talk")
 @NamedQueries({
 		@NamedQuery(name = "Talk.All", query = "SELECT t from Talk t"),
-		@NamedQuery(name = "Talk.ByDates", query = "SELECT t from Talk t where (t.start < :start AND t.end > :start) OR (t.start < :end AND t.end > :end) OR (t.start > :start AND t.end < :end)") })
+		@NamedQuery(name = "Talk.ByDates", query = "SELECT t from Talk t where (t.start < :start AND t.end > :start) OR (t.start < :end AND t.end > :end) OR (t.start > :start AND t.end < :end)"),
+		@NamedQuery(name = "Talk.BySpeaker", query = "SELECT t from Talk t inner join t.speakers s where s.id = :speakerId"),
+		@NamedQuery(name = "Talk.ByRoom", query = "SELECT t from Talk t where t.room.id = :roomId order by t.start desc") })
 public class Talk implements Serializable {
 
 	/**
@@ -93,8 +95,8 @@ public class Talk implements Serializable {
 	}
 
 	public long getDuration() {
-		return Math
-				.round(Math.ceil((end.getTime() - start.getTime()) / 1000 * 60));
+		return Math.round(Math.ceil((end.getTime() - start.getTime())
+				/ (1000 * 60)));
 	}
 
 	public Room getRoom() {

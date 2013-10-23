@@ -15,6 +15,12 @@ import org.junit.Test;
 import com.prodyna.conference.model.Conference;
 import com.prodyna.conference.util.DateUtil;
 
+/**
+ * Test case for CRUD on {@link ConferenceServiceREST}.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 public class ConferenceRESTServiceTest extends AbstractDeployableTest {
 
 	private static final String REST_PATH = "services";

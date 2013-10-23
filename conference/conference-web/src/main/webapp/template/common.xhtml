@@ -4,7 +4,7 @@
 	xmlns:ui='http://java.sun.com/jsf/facelets'
 	xmlns:p="http://primefaces.org/ui">
 
-<f:view contentType='text/html'>
+<f:view contentType='text/html' locale="#{conferenceOverviewController.locale}">
 
 	<h:head>
 		<f:facet name='first'>
@@ -19,20 +19,31 @@
 			<div id='header' class='ui-widget'>
 				<div id='logo'
 					style='border: 1px solid #acbece; border-bottom: none;'>
-					<p:graphicImage value='/resources/gfx/header.png' />
+					<p:graphicImage value='/resources/gfx/header.png'/>
 				</div>
 				<div id='logo' style='border: 1px solid #acbece;'>
 					<p:menubar style='border:none'>
-						<p:submenu label="Administration"> 
-							<p:menuitem value='Conference' url='/conference.xhtml'/>
-							<p:menuitem value='Talk' url='/talk.xhtml'/>
-							<p:menuitem value='Speaker' url='/speaker.xhtml'/>
-							<p:menuitem value='Room' url='/room.xhtml'/>
+						<p:submenu label="Overview"> 
+							<p:menuitem value='Conference' url='/index.xhtml'/>
 						</p:submenu>
+						<p:submenu label="Administration"> 
+							<p:menuitem value='Conference' url='/admin/conference.xhtml'/>
+							<p:menuitem value='Talk' url='/admin/talk.xhtml'/>
+							<p:menuitem value='Speaker' url='/admin/speaker.xhtml'/>
+							<p:menuitem value='Room' url='/admin/room.xhtml'/>
+						</p:submenu>
+						
+						<f:facet name="options"> 
+							<h:form>
+								<p:graphicImage value='/resources/gfx/uk.png' ondblclick="changeLocale([{name:'locale', value: 'en'}])"/>
+								<p:graphicImage value='/resources/gfx/de.png' ondblclick="changeLocale([{name:'locale', value: 'de'}])"/>
+								<p:remoteCommand name="changeLocale" action="#{conferenceOverviewController.changeLocale()}" />
+							</h:form> 
+				        </f:facet> 
 					</p:menubar>
 				</div>
 			</div>
-			<div id='page' class='ui-widget' style='overflow: hidden;margin-top: 20px;'>
+			<div id='page' class='ui-widget' style='overflow: hidden; margin-top: 30px;'>
 				<div id='content' style='display: block'>
 					<ui:insert name='content'></ui:insert>
 				</div>

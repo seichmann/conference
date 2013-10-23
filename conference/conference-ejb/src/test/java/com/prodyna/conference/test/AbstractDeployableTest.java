@@ -12,6 +12,14 @@ import com.prodyna.conference.mbean.Entry;
 import com.prodyna.conference.mbean.PerformanceMXBean;
 import com.prodyna.conference.test.mock.PerformanceMock;
 
+/**
+ * Abstract Base Class for all test.
+ * 
+ * Does Deployment for EJB-Module.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 @RunWith(Arquillian.class)
 public abstract class AbstractDeployableTest {
 

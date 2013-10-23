@@ -49,7 +49,8 @@ public class TalkServiceBean implements TalkService {
 		if (talk.getSpeakers() != null && !talk.getSpeakers().isEmpty()) {
 			for (Speaker speaker : talk.getSpeakers()) {
 				for (Talk existingTalk : talks) {
-					if (existingTalk.getSpeakers() != null
+					if (!isSameTalk(existingTalk, talk)
+							&& existingTalk.getSpeakers() != null
 							&& existingTalk.getSpeakers().contains(speaker)) {
 						throw new SpeakerConstraintException(existingTalk);
 					}
@@ -59,7 +60,8 @@ public class TalkServiceBean implements TalkService {
 
 		if (talk.getRoom() != null) {
 			for (Talk existingTalk : talks) {
-				if (existingTalk.getRoom() != null
+				if (!isSameTalk(existingTalk, talk)
+						&& existingTalk.getRoom() != null
 						&& existingTalk.getRoom().equals(talk.getRoom())) {
 					throw new RoomConstraintException(existingTalk);
 				}
@@ -70,9 +72,24 @@ public class TalkServiceBean implements TalkService {
 		return result;
 	}
 
+	private boolean isSameTalk(Talk existingTalk, Talk talk) {
+		return talk.getId() != null
+				&& talk.getId().equals(existingTalk.getId());
+	}
+
 	@Override
 	public Talk loadTalkEager(Talk talk) {
-		Talk result = em.find(Talk.class, talk.getId());
+		if (talk.getSpeakers().size() > 0) {
+			return loadTalkEager(talk.getId());
+		} else {
+			return talk;
+		}
+
+	}
+
+	@Override
+	public Talk loadTalkEager(Long talkId) {
+		Talk result = em.find(Talk.class, talkId);
 
 		// Trigger query Speaker List
 		Hibernate.initialize(result.getSpeakers());
@@ -89,6 +106,20 @@ public class TalkServiceBean implements TalkService {
 		return query.getResultList();
 	}
 
+	@Override
+	public List<Talk> getTalksBySpeaker(Long speakerId) {
+		TypedQuery<Talk> query = em.createNamedQuery("Talk.BySpeaker",
+				Talk.class);
+		query.setParameter("speakerId", speakerId);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Talk> getTalksByRoom(Long roomId) {
+		TypedQuery<Talk> query = em.createNamedQuery("Talk.ByRoom", Talk.class);
+		query.setParameter("roomId", roomId);
+		return query.getResultList();
+	}
 	// @Override
 	// public TalkSpeakerRelation assignSpeaker(Talk talk, Speaker speaker) {
 	// // TalkSpeakerRelation relation = new TalkSpeakerRelation();

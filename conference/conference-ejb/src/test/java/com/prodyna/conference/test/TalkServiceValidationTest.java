@@ -18,6 +18,12 @@ import com.prodyna.conference.service.exception.RoomConstraintException;
 import com.prodyna.conference.service.exception.SpeakerConstraintException;
 import com.prodyna.conference.util.DateUtil;
 
+/**
+ * Test for Validation Logic of Conference / Talks.
+ * 
+ * @author Stephan Eichmann
+ * 
+ */
 public class TalkServiceValidationTest extends AbstractDeployableTest {
 
 	@Inject
