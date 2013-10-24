@@ -3,3 +3,4 @@ jdk:
   - openjdk6
 before_script:
   - cd conference
+install: mvn clean package
