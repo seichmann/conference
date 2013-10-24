@@ -37,6 +37,5 @@
       <class>com.prodyna.conference.model.Speaker</class>
       <class>com.prodyna.conference.model.Room</class>
       <!--  <class>com.prodyna.conference.model.TalkSpeakerRelation</class>-->
-      
    </persistence-unit>
 </persistence>
