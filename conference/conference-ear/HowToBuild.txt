@@ -1,0 +1,1 @@
+mvn clean install -Parq-jbossas-remote

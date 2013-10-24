@@ -120,6 +120,7 @@ public class TalkServiceBean implements TalkService {
 		query.setParameter("roomId", roomId);
 		return query.getResultList();
 	}
+
 	// @Override
 	// public TalkSpeakerRelation assignSpeaker(Talk talk, Speaker speaker) {
 	// // TalkSpeakerRelation relation = new TalkSpeakerRelation();

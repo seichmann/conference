@@ -36,8 +36,8 @@ public class ConferenceRESTServiceTest extends AbstractDeployableTest {
 		Conference conference = new Conference();
 		conference.setName("JAX");
 		conference.setDescription("ENTER");
-		conference.setStart(DateUtil.parse("01.05.2013"));
-		conference.setEnd(DateUtil.parse("01.05.2013"));
+		conference.setStart(DateUtil.parse("01.05.2015"));
+		conference.setEnd(DateUtil.parse("01.05.2015"));
 
 		request.body(MediaType.APPLICATION_JSON, conference);
 
@@ -46,7 +46,7 @@ public class ConferenceRESTServiceTest extends AbstractDeployableTest {
 		Assert.assertEquals(200, responseObj.getStatus());
 		Assert.assertEquals(
 				responseObj.getEntity(),
-				"{\"id\":1,\"name\":\"JAX\",\"description\":\"ENTER\",\"start\":1367359200000,\"end\":1367359200000,\"talks\":null}");
+				"{\"id\":1,\"name\":\"JAX\",\"description\":\"ENTER\",\"start\":1430431200000,\"end\":1430431200000,\"talks\":null}");
 	}
 
 	@Test
@@ -62,6 +62,6 @@ public class ConferenceRESTServiceTest extends AbstractDeployableTest {
 		Assert.assertEquals(200, responseObj.getStatus());
 		Assert.assertEquals(
 				responseObj.getEntity(),
-				"[{\"id\":1,\"name\":\"JAX\",\"description\":\"ENTER\",\"start\":1367359200000,\"end\":1367359200000,\"talks\":[]}]");
+				"[{\"id\":1,\"name\":\"JAX\",\"description\":\"ENTER\",\"start\":1430431200000,\"end\":1430431200000,\"talks\":[]}]");
 	}
 }

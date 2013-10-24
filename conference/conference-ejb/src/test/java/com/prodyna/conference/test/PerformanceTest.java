@@ -38,15 +38,21 @@ public class PerformanceTest {
 
 		ms.registerMBean(bean, on);
 
+		int countBefore = (Integer) ms.getAttribute(on, "Count");
+
 		ms.invoke(on, "report", new Object[] { "a", "x", 10 },
 				new String[] { String.class.getName(), String.class.getName(),
 						long.class.getName() });
 
-		int count = (Integer) ms.getAttribute(on, "Count");
-		Assert.assertEquals(1, count);
+		int countAfter = (Integer) ms.getAttribute(on, "Count");
+		Assert.assertEquals(1, countAfter - countBefore);
 
 		CompositeData[] all = (CompositeData[]) ms.getAttribute(on, "All");
-		Assert.assertEquals(1, all[0].values().size());
+		for (CompositeData compositeData : all) {
+			if (compositeData.get("service").equals("a")) {
+				Assert.assertEquals(1L, compositeData.get("count"));
+			}
+		}
 		ms.unregisterMBean(on);
 	}
 }

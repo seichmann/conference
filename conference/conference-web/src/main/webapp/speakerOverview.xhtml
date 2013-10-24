@@ -1,0 +1,36 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:ui='http://java.sun.com/jsf/facelets'
+	xmlns:h='http://java.sun.com/jsf/html'
+	xmlns:f='http://java.sun.com/jsf/core'
+	xmlns:p='http://primefaces.org/ui'>
+<ui:composition template='/template/common.xhtml'>
+
+	<ui:define name='pageTitle'>
+		<h:outputText value='Speaker Overview' />
+	</ui:define>
+
+	<ui:define name='content'>
+		<h:form id="form">
+			<f:event type="preRenderView" listener="#{speakerOverviewController.loadData()}" />
+			
+			<p:panelGrid columns="2" id="panelGrid" style="width:100%">
+				<f:facet name="header">
+				</f:facet>
+				<h:outputLabel for="name" value="Name" />
+				<h:outputText id="name" value="#{speakerOverviewController.speaker.name}"/>
+				 
+				<h:outputLabel for="description" value="Description" />
+				<h:outputText id="description" value="#{speakerOverviewController.speaker.description}"/>
+
+				<h:outputLabel value="Talks" />
+				<p:column>
+			       <ui:repeat value="#{speakerOverviewController.talks}" var="talk">
+			       		<p:commandLink action="#{navigationOverviewController.open(talk.id)}" value="#{talk.name}"
+			                      style="font-weight:bold; margin-right: 5px;"/>
+			       </ui:repeat>
+				</p:column>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

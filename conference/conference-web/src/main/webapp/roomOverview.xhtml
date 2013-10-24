@@ -1,0 +1,53 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:ui='http://java.sun.com/jsf/facelets'
+	xmlns:h='http://java.sun.com/jsf/html'
+	xmlns:f='http://java.sun.com/jsf/core'
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template='/template/common.xhtml'>
+
+	<ui:define name='pageTitle'>
+		<h:outputText value='Room Overview' />
+	</ui:define>
+
+	<ui:define name='content'>
+		<f:event type="preRenderView" listener="#{roomOverviewController.loadData()}" />
+		
+		<h:form id="form">
+			<p:messages id="messages" autoUpdate="true" /> 
+			
+			<p:panelGrid columns="2" id="panelGrid" style="width:100%">
+				<f:facet name="header">
+				</f:facet>
+				<h:outputLabel for="name" value="Name" />
+				<h:outputText id="name" value="#{roomOverviewController.room.name}"/>
+				 
+				<h:outputLabel for="capacity" value="Capacity" />
+				<h:outputText id="capacity" value="#{roomOverviewController.room.capacity}"/>
+			</p:panelGrid>		
+				
+			<p:dataTable value="#{roomOverviewController.talks}" var="talk" id="roomTable" rowKey="#{talk.id}" style="margin-top: 20px;">
+
+				<p:column headerText="Name">
+					<h:outputText value="#{talk.name}" />
+				</p:column>
+
+				<p:column headerText="Date">
+					<h:outputText value="#{talk.start}">
+						  <f:convertDateTime pattern="dd.MM.yyyy k:mm" />
+					</h:outputText> - 
+					<h:outputText value="#{talk.end}">
+						  <f:convertDateTime pattern="dd.MM.yyyy k:mm" />
+					</h:outputText>
+		        </p:column> 
+		        
+		       <p:column style="width:4%">  
+        			<h:commandLink action="#{navigationOverviewController.open(talk.id)}" title="View Talk" styleClass="ui-icon ui-icon-search" style="font-weight:bold"
+                             immediate="true">
+                	</h:commandLink>
+        		</p:column> 
+			</p:dataTable>	
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

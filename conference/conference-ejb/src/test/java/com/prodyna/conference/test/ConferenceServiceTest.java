@@ -1,7 +1,6 @@
 package com.prodyna.conference.test;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,8 +48,8 @@ public class ConferenceServiceTest extends AbstractDeployableTest {
 		Conference conference = new Conference();
 		conference.setName("JAX");
 		conference.setDescription("ENTER");
-		conference.setStart(new Date());
-		conference.setEnd(new Date());
+		conference.setStart(DateUtil.parse("01.12.2015"));
+		conference.setEnd(DateUtil.parse("01.12.2015"));
 
 		Conference saveConference = service.saveConference(conference);
 
@@ -69,8 +68,8 @@ public class ConferenceServiceTest extends AbstractDeployableTest {
 		Conference conference = new Conference();
 		conference.setName("Prodyna Hausmesser");
 		conference.setDescription("Best of the best.");
-		conference.setStart(DateUtil.parse("01.05.2015"));
-		conference.setEnd(DateUtil.parse("01.06.2015"));
+		conference.setStart(DateUtil.parse("01.12.2013"));
+		conference.setEnd(DateUtil.parse("02.12.2013"));
 
 		Room room1 = new Room();
 		room1.setName("Room 1");
@@ -109,8 +108,8 @@ public class ConferenceServiceTest extends AbstractDeployableTest {
 		Talk talk1 = new Talk();
 		talk1.setName("Java EE6");
 		talk1.setDescription("JPA, CDI, EJB");
-		talk1.setStart(DateUtil.parse("01.05.2015 12:30"));
-		talk1.setEnd(DateUtil.parse("01.05.2015 14:30"));
+		talk1.setStart(DateUtil.parse("01.12.2013 12:30"));
+		talk1.setEnd(DateUtil.parse("01.12.2013 14:30"));
 		talk1.setRoom(saveRoom1);
 		Set<Speaker> speakers1 = new HashSet<Speaker>();
 		speakers1.add(saveSpeaker1);
@@ -121,8 +120,8 @@ public class ConferenceServiceTest extends AbstractDeployableTest {
 		Talk talk2 = new Talk();
 		talk2.setName("Spring");
 		talk2.setDescription("Ecosystem");
-		talk2.setStart(DateUtil.parse("01.06.2015 12:30"));
-		talk2.setEnd(DateUtil.parse("01.06.2015 14:30"));
+		talk2.setStart(DateUtil.parse("02.12.2013 12:30"));
+		talk2.setEnd(DateUtil.parse("02.12.2013 14:30"));
 		talk2.setRoom(saveRoom2);
 		Set<Speaker> speakers2 = new HashSet<Speaker>();
 		speakers2.add(saveSpeaker1);

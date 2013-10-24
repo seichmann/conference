@@ -1,0 +1,53 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:ui='http://java.sun.com/jsf/facelets'
+	xmlns:h='http://java.sun.com/jsf/html'
+	xmlns:f='http://java.sun.com/jsf/core'
+	xmlns:p='http://primefaces.org/ui'>
+<ui:composition template='/template/common.xhtml'>
+
+	<ui:define name='pageTitle'>
+		<h:outputText value='Talk Overview' />
+	</ui:define>
+
+	<ui:define name='content'>
+		<f:event type="preRenderView" listener="#{talkOverviewController.loadData()}" />
+		
+		<h:form id="form">
+			<p:messages id="messages" autoUpdate="true" /> 
+
+			<p:panelGrid columns="2" id="panelGrid" style="width:100%" >
+				<f:facet name="header">
+				</f:facet>
+				<h:outputLabel for="name" value="Name" />
+				<h:outputText id="name" value="#{talkOverviewController.talk.name}"/>
+				 
+				<h:outputLabel for="description" value="Description" />
+				<h:outputText id="description" value="#{talkOverviewController.talk.description}"/>
+
+				<h:outputLabel for="date" value="Date" />
+				<p:column id="date">
+					<h:outputText value="#{talkOverviewController.talk.start}">
+						  <f:convertDateTime pattern="dd.MM.yyyy k:mm" />
+					</h:outputText> - 
+					<h:outputText value="#{talkOverviewController.talk.end}">
+						  <f:convertDateTime pattern="dd.MM.yyyy k:mm" />
+					</h:outputText>
+		        </p:column> 
+		        
+		       <h:outputLabel for="duration" value="Duration (minutes)" />
+		       <h:outputText for="duration" value="#{talkOverviewController.talk.duration}"/>
+		       
+			   <h:outputLabel for="room" value="Room" />
+			   <p:commandLink action="#{navigationOverviewController.open(talkOverviewController.talk.room)}" value="#{talkOverviewController.talk.room.name}"
+		                      style="font-weight:bold" rendered="#{not empty talkOverviewController.talk.room}"/><p:spacer rendered="#{empty talkOverviewController.talk.room}"/>
+		       <h:outputLabel value="Speakers" />               
+		       <ui:repeat value="#{talkOverviewController.speakers}" var="speaker">
+		       		<p:commandLink action="#{navigationOverviewController.open(speaker)}" value="#{speaker.name}"
+		                      style="font-weight:bold; margin-right: 5px;"/>
+		       </ui:repeat>
+			</p:panelGrid>
+		</h:form>
+	
+	</ui:define>
+</ui:composition>
+</html>

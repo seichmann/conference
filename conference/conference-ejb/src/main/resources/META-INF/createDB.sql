@@ -1,7 +1,7 @@
 CREATE DATABASE `conference`;
 
 CREATE TABLE `conference`.`conference` (
-  `id` int NOT NULL,
+  `id` bigint(20) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `end` datetime DEFAULT NULL,
   `name` varchar(255) NOT NULL,
@@ -12,16 +12,17 @@ CREATE TABLE `conference`.`conference` (
 GRANT ALL ON TABLE `conference`.`conference` TO `conference`;
 
 CREATE TABLE `conference`.`room` (
-  `id` int NOT NULL,
+  `id` bigint(20) NOT NULL,
   `capacity` int NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
+  INDEX (`id`), 
   UNIQUE KEY `name` (`name`)
 ); 
 GRANT ALL ON TABLE `conference`.`room` TO `conference`;
 
 CREATE TABLE `conference`.`speaker` (
-  `id` int NOT NULL,
+  `id` bigint(20) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -30,12 +31,12 @@ CREATE TABLE `conference`.`speaker` (
 GRANT ALL ON TABLE `conference`.`speaker` TO `conference`;
 
 CREATE TABLE `conference`.`talk` (
-  `id` int NOT NULL,
+  `id` bigint(20) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `end` datetime DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `start` datetime DEFAULT NULL,
-  `room_id` int DEFAULT NULL,
+  `room_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `room_id` (`room_id`),
@@ -44,8 +45,8 @@ CREATE TABLE `conference`.`talk` (
 GRANT ALL ON TABLE `conference`.`talk` TO `conference`;
 
 CREATE TABLE `conference`.`conference_talk` (
-  `conference_id` int NOT NULL,
-  `talks_id` int NOT NULL,
+  `conference_id` bigint(20) NOT NULL,
+  `talks_id` bigint(20) NOT NULL,
   KEY `talks_id` (`talks_id`),
   KEY `conference_id` (`conference_id`),
   CONSTRAINT `conference_id` FOREIGN KEY (`conference_id`) REFERENCES `conference`.`conference` (`id`),
@@ -60,8 +61,8 @@ GRANT ALL ON TABLE `conference`.`hibernate_sequence` TO `conference`;
 INSERT INTO `conference`.`hibernate_sequence`(next_val) VALUES (0);
 
 CREATE TABLE `conference`.`talk_speaker` (
-  `talk_id` int NOT NULL,
-  `speakers_id` int NOT NULL,
+  `talk_id` bigint(20) NOT NULL,
+  `speakers_id` bigint(20) NOT NULL,
   PRIMARY KEY (`talk_id`,`speakers_id`),
   KEY `speakers_id` (`speakers_id`),
   KEY `talk_id` (`talk_id`),
@@ -69,5 +70,3 @@ CREATE TABLE `conference`.`talk_speaker` (
   CONSTRAINT `speakers_id` FOREIGN KEY (`speakers_id`) REFERENCES `conference`.`speaker` (`id`)
 ); 
 GRANT ALL ON TABLE `conference`.`talk_speaker` TO `conference`;
-
-
