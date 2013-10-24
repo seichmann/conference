@@ -1,6 +1,5 @@
 language: java
 jdk:
   - openjdk6
-before_script:
-  - cd conference/conference
+before_install: cd conference
 script:: mvn clean package
