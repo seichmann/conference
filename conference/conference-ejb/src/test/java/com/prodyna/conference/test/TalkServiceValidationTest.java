@@ -1,7 +1,7 @@
 package com.prodyna.conference.test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -49,18 +49,16 @@ public class TalkServiceValidationTest extends AbstractDeployableTest {
 		talk1.setDescription("JPA, CDI, EJB");
 		talk1.setStart(DateUtil.parseHourMinute("01.05.2015 12:30"));
 		talk1.setEnd(DateUtil.parseHourMinute("01.05.2015 14:30"));
-		Set<Speaker> speakers = new HashSet<Speaker>();
+		List<Speaker> speakers = new ArrayList<Speaker>();
 		speakers.add(saveSpeaker);
-		talk1.setSpeakers(speakers);
-		Talk saveTalk1 = talkService.saveTalk(talk1);
+		Talk saveTalk1 = talkService.saveTalk(talk1, speakers);
 
 		Talk talk2 = new Talk();
 		talk2.setName("Spring");
 		talk2.setDescription("Ecosystem");
 		talk2.setStart(DateUtil.parseHourMinute("01.05.2015 13:30"));
 		talk2.setEnd(DateUtil.parseHourMinute("01.05.2015 15:30"));
-		talk2.setSpeakers(speakers);
-		Talk saveTalk2 = talkService.saveTalk(talk2);
+		Talk saveTalk2 = talkService.saveTalk(talk2, speakers);
 	}
 
 	@Test(expected = RoomConstraintException.class)
@@ -78,7 +76,7 @@ public class TalkServiceValidationTest extends AbstractDeployableTest {
 		talk1.setStart(DateUtil.parseHourMinute("01.05.2015 10:30"));
 		talk1.setEnd(DateUtil.parseHourMinute("01.05.2015 12:30"));
 		talk1.setRoom(saveRoom);
-		Talk saveTalk1 = talkService.saveTalk(talk1);
+		Talk saveTalk1 = talkService.saveTalk(talk1, null);
 
 		Talk talk2 = new Talk();
 		talk2.setName("Spring 2");
@@ -86,6 +84,6 @@ public class TalkServiceValidationTest extends AbstractDeployableTest {
 		talk2.setStart(DateUtil.parseHourMinute("01.05.2015 11:30"));
 		talk2.setEnd(DateUtil.parseHourMinute("01.05.2015 15:30"));
 		talk2.setRoom(saveRoom);
-		Talk saveTalk2 = talkService.saveTalk(talk2);
+		Talk saveTalk2 = talkService.saveTalk(talk2, null);
 	}
 }

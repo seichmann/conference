@@ -48,9 +48,12 @@ public class MonitoringInterceptor {
 	private String getCommaSeparatedList(Object[] parameters) {
 		StringBuilder result = new StringBuilder();
 		for (int i = 0; i < parameters.length; i++) {
-			result.append(parameters[i].toString());
-			if (i < parameters.length - 1) {
-				result.append(",");
+			Object param = parameters[i];
+			if (param != null) {
+				result.append(param.toString());
+				if (i < parameters.length - 1) {
+					result.append(",");
+				}
 			}
 		}
 		return result.toString();

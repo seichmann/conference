@@ -1,8 +1,8 @@
 package com.prodyna.conference.converter;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
@@ -29,9 +29,9 @@ public class SpeakerConverter implements Converter, Serializable {
 			String value) {
 		Application application = FacesContext.getCurrentInstance()
 				.getApplication();
-		Set<Speaker> allSpeakers = (Set<Speaker>) application
+		List<Speaker> allSpeakers = (List<Speaker>) application
 				.evaluateExpressionGet(context,
-						"#{talkController.allSpeakers}", HashSet.class);
+						"#{talkController.allSpeakers}", ArrayList.class);
 
 		// Convert to object
 		if (value != null && !value.trim().isEmpty()) {

@@ -2,26 +2,20 @@ package com.prodyna.conference.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @XmlRootElement
@@ -29,7 +23,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NamedQueries({
 		@NamedQuery(name = "Talk.All", query = "SELECT t from Talk t"),
 		@NamedQuery(name = "Talk.ByDates", query = "SELECT t from Talk t where (t.start < :start AND t.end > :start) OR (t.start < :end AND t.end > :end) OR (t.start > :start AND t.end < :end)"),
-		@NamedQuery(name = "Talk.BySpeaker", query = "SELECT t from Talk t inner join t.speakers s where s.id = :speakerId"),
 		@NamedQuery(name = "Talk.ByRoom", query = "SELECT t from Talk t where t.room.id = :roomId order by t.start desc") })
 public class Talk implements Serializable {
 
@@ -61,14 +54,15 @@ public class Talk implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Room room;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@LazyCollection(LazyCollectionOption.EXTRA)
-	private Set<Speaker> speakers;
+	// Lazy should always be avoided!
+	// @ManyToMany(fetch = FetchType.LAZY)
+	// @LazyCollection(LazyCollectionOption.EXTRA)
+	// private Set<Speaker> speakers;
 
-	@PostLoad
-	public void initSpeakerCollectionSize() {
-		speakers.size();
-	}
+	// @PostLoad
+	// public void initSpeakerCollectionSize() {
+	// speakers.size();
+	// }
 
 	public Long getId() {
 		return id;
@@ -107,13 +101,13 @@ public class Talk implements Serializable {
 		this.room = room;
 	}
 
-	public Set<Speaker> getSpeakers() {
-		return speakers;
-	}
-
-	public void setSpeakers(Set<Speaker> speakers) {
-		this.speakers = speakers;
-	}
+	// public Set<Speaker> getSpeakers() {
+	// return speakers;
+	// }
+	//
+	// public void setSpeakers(Set<Speaker> speakers) {
+	// this.speakers = speakers;
+	// }
 
 	public void setDuration(long duration) {
 		this.duration = duration;

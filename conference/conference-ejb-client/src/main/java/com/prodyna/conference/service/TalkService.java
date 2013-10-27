@@ -3,6 +3,7 @@ package com.prodyna.conference.service;
 import java.util.Date;
 import java.util.List;
 
+import com.prodyna.conference.model.Speaker;
 import com.prodyna.conference.model.Talk;
 import com.prodyna.conference.service.exception.ConferenceServiceException;
 
@@ -32,19 +33,13 @@ public interface TalkService {
 	 * Create/Update given talk.
 	 * 
 	 * @param talk
+	 * @param speakerList
 	 * @return
 	 * @throws ConferenceServiceException
 	 *             semantic validation errors.
 	 */
-	Talk saveTalk(Talk talk) throws ConferenceServiceException;
-
-	/**
-	 * Loads speaker relation of given talk.
-	 * 
-	 * @param talk
-	 * @return
-	 */
-	Talk loadTalkEager(Talk talk);
+	Talk saveTalk(Talk talk, List<Speaker> speakerList)
+			throws ConferenceServiceException;
 
 	/**
 	 * Returns all talks which overlap with given date range.
@@ -54,14 +49,6 @@ public interface TalkService {
 	 * @return
 	 */
 	List<Talk> getTalks(Date start, Date end);
-
-	/**
-	 * Load talks with speaker relation.
-	 * 
-	 * @param talkId
-	 * @return
-	 */
-	Talk loadTalkEager(Long talkId);
 
 	/**
 	 * Returns all talks which is hold by given speaker.
@@ -78,4 +65,20 @@ public interface TalkService {
 	 * @return
 	 */
 	List<Talk> getTalksByRoom(Long roomId);
+
+	/**
+	 * Get all speakers that are assigned to given talk.
+	 * 
+	 * @param talkId
+	 * @return
+	 */
+	List<Speaker> getSpeakersByTalk(Long talkId);
+
+	/**
+	 * Returns talk.
+	 * 
+	 * @param talkId
+	 * @return
+	 */
+	Talk getTalk(Long talkId);
 }

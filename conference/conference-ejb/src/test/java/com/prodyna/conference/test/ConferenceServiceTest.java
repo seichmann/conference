@@ -1,9 +1,7 @@
 package com.prodyna.conference.test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -111,11 +109,10 @@ public class ConferenceServiceTest extends AbstractDeployableTest {
 		talk1.setStart(DateUtil.parse("01.12.2013 12:30"));
 		talk1.setEnd(DateUtil.parse("01.12.2013 14:30"));
 		talk1.setRoom(saveRoom1);
-		Set<Speaker> speakers1 = new HashSet<Speaker>();
+		List<Speaker> speakers1 = new ArrayList<Speaker>();
 		speakers1.add(saveSpeaker1);
 		speakers1.add(saveSpeaker2);
-		talk1.setSpeakers(speakers1);
-		Talk saveTalk1 = talkService.saveTalk(talk1);
+		Talk saveTalk1 = talkService.saveTalk(talk1, speakers1);
 
 		Talk talk2 = new Talk();
 		talk2.setName("Spring");
@@ -123,10 +120,9 @@ public class ConferenceServiceTest extends AbstractDeployableTest {
 		talk2.setStart(DateUtil.parse("02.12.2013 12:30"));
 		talk2.setEnd(DateUtil.parse("02.12.2013 14:30"));
 		talk2.setRoom(saveRoom2);
-		Set<Speaker> speakers2 = new HashSet<Speaker>();
+		List<Speaker> speakers2 = new ArrayList<Speaker>();
 		speakers2.add(saveSpeaker1);
-		talk2.setSpeakers(speakers2);
-		Talk saveTalk2 = talkService.saveTalk(talk2);
+		Talk saveTalk2 = talkService.saveTalk(talk2, speakers2);
 
 		// Assert Crud Talks
 		List<Talk> loadedTalks = talkService.getAllTalks();
@@ -135,13 +131,15 @@ public class ConferenceServiceTest extends AbstractDeployableTest {
 		Assert.assertEquals("Java EE6", loadedTalk1.getName());
 		Assert.assertNotNull(loadedTalk1.getRoom());
 		Assert.assertEquals("Room 1", loadedTalk1.getRoom().getName());
-		Assert.assertEquals(2, loadedTalk1.getSpeakers().size());
+		Assert.assertEquals(2,
+				talkService.getSpeakersByTalk(loadedTalk1.getId()).size());
 
 		Talk loadedTalk2 = loadedTalks.get(1);
 		Assert.assertEquals("Spring", loadedTalk2.getName());
 		Assert.assertNotNull(loadedTalk2.getRoom());
 		Assert.assertEquals("Room 2", loadedTalk2.getRoom().getName());
-		Assert.assertEquals(1, loadedTalk2.getSpeakers().size());
+		Assert.assertEquals(1,
+				talkService.getSpeakersByTalk(loadedTalk2.getId()).size());
 
 		List<Talk> talks2 = new ArrayList<Talk>();
 		talks2.add(saveTalk1);

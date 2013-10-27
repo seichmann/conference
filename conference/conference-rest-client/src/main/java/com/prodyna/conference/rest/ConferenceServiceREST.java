@@ -29,7 +29,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.prodyna.conference.model.Conference;
-import com.prodyna.conference.model.Talk;
 import com.prodyna.conference.service.ConferenceService;
 import com.prodyna.conference.service.exception.ConferenceServiceException;
 
@@ -58,13 +57,7 @@ public class ConferenceServiceREST {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Conference> getAllConferences() {
-		List<Conference> conferences = service.getAllConferences();
-		for (Conference conference : conferences) {
-			for (Talk talk : conference.getTalks()) {
-				talk.setSpeakers(null);
-			}
-		}
-		return conferences;
+		return service.getAllConferences();
 	}
 
 	@DELETE

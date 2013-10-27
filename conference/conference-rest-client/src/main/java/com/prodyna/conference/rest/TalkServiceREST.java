@@ -29,6 +29,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.prodyna.conference.model.Speaker;
 import com.prodyna.conference.model.Talk;
 import com.prodyna.conference.service.TalkService;
 import com.prodyna.conference.service.exception.ConferenceServiceException;
@@ -49,18 +50,22 @@ public class TalkServiceREST {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Talk saveTalk(Talk talk) throws ConferenceServiceException {
-		return service.saveTalk(talk);
+	public Talk saveTalk(Talk talk, List<Speaker> speakerList)
+			throws ConferenceServiceException {
+		return service.saveTalk(talk, speakerList);
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Talk> getAllTalks() {
-		List<Talk> talks = service.getAllTalks();
-		for (Talk talk : talks) {
-			talk.setSpeakers(null);
-		}
-		return talks;
+		return service.getAllTalks();
+	}
+
+	@GET
+	@Path("/{talkId}/")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Talk getTalk(@PathParam("talkId") Long talkId) {
+		return service.getTalk(talkId);
 	}
 
 	@DELETE
@@ -68,13 +73,6 @@ public class TalkServiceREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	public void deleteTalk(Talk conference) {
 		service.deleteTalk(conference);
-	}
-
-	@GET
-	@Path("/{talkId}/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Talk loadTalkEager(@PathParam("talkId") Long talkId) {
-		return service.loadTalkEager(talkId);
 	}
 
 	@GET

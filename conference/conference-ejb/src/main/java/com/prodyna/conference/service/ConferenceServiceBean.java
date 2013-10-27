@@ -29,7 +29,7 @@ public class ConferenceServiceBean implements ConferenceService {
 	@Override
 	public Conference saveConference(Conference conference)
 			throws ConferenceServiceException {
-		// Validate Constraints (Talks not in daterange of conference
+		// Validate Constraints (Talks not in daterange of conference)
 		if (conference.getTalks() != null) {
 			for (Talk talk : conference.getTalks()) {
 				if (!DateUtil.inRange(talk.getStart(), conference.getStart(),

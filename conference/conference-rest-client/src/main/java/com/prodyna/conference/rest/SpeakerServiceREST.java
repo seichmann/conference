@@ -28,50 +28,43 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.prodyna.conference.model.Conference;
-import com.prodyna.conference.model.Talk;
-import com.prodyna.conference.service.ConferenceService;
+import com.prodyna.conference.model.Speaker;
+import com.prodyna.conference.service.SpeakerService;
 import com.prodyna.conference.service.exception.ConferenceServiceException;
 
 /**
- * REST-Implementation for {@link ConferenceService}.
+ * REST-Implementation for {@link SpeakerService}.
  * 
  * @author Stephan Eichmann
  * 
  */
-@Path("/conferences")
+@Path("/speakers")
 @RequestScoped
 public class SpeakerServiceREST {
 
 	@Inject
-	private ConferenceService service;
+	private SpeakerService service;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Conference saveConference(Conference conference)
+	public Speaker saveSpeaker(Speaker conference)
 			throws ConferenceServiceException {
-		return service.saveConference(conference);
-		// return Response.ok(service.saveConference(conference)).build();
+		return service.saveSpeaker(conference);
+		// return Response.ok(service.saveSpeaker(conference)).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Conference> getAllConferences() {
-		List<Conference> conferences = service.getAllConferences();
-		for (Conference conference : conferences) {
-			for (Talk talk : conference.getTalks()) {
-				talk.setSpeakers(null);
-			}
-		}
-		return conferences;
+	public List<Speaker> getAllSpeakers() {
+		return service.getAllSpeakers();
 	}
 
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void deleteConference(Conference conference) {
-		service.deleteConference(conference);
+	public void deleteSpeaker(Speaker conference) {
+		service.deleteSpeaker(conference);
 	}
 
 }

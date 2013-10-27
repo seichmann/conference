@@ -35,11 +35,11 @@ public class TalkNotificationTest extends AbstractDeployableTest {
 		talk1.setStart(DateUtil.parseHourMinute("01.05.2015 12:30"));
 		talk1.setEnd(DateUtil.parseHourMinute("01.05.2015 14:30"));
 
-		Talk saveTalk = talkService.saveTalk(talk1);
+		Talk saveTalk = talkService.saveTalk(talk1, null);
 
 		saveTalk.setStart(DateUtil.parseHourMinute("01.05.2015 11:30"));
 
-		talkService.saveTalk(saveTalk);
+		talkService.saveTalk(saveTalk, null);
 
 		try {
 			Thread.sleep(5000);

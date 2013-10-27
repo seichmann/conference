@@ -1,6 +1,5 @@
 package com.prodyna.conference.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -28,6 +27,8 @@ public class TalkOverviewController extends AbstractController {
 
 	private Talk talk;
 
+	private List<Speaker> speakers;
+
 	public void loadData() {
 		try {
 			// DOES NOT work correctly because ViewScoped Bean is
@@ -41,7 +42,8 @@ public class TalkOverviewController extends AbstractController {
 
 			Long talkId = navigationOverviewController.getTalkId();
 			if (talkId != null) {
-				talk = talkService.loadTalkEager(talkId);
+				talk = talkService.getTalk(talkId);
+				speakers = talkService.getSpeakersByTalk(talkId);
 			}
 		} catch (Throwable t) {
 			exceptionHandler.handle(t);
@@ -60,6 +62,6 @@ public class TalkOverviewController extends AbstractController {
 	}
 
 	public List<Speaker> getSpeakers() {
-		return new ArrayList<Speaker>(talk.getSpeakers());
+		return speakers;
 	}
 }

@@ -70,9 +70,9 @@
 				<p:calendar id="end" value="#{talkController.editTalk.end}" pattern="MM/dd/yyyy HH:mm" required="true"/>
 				
 				<h:outputLabel for="speaker" value="Assigned Speakers" />
-				<p:selectManyMenu id="speaker" value="#{talkController.editTalk.speakers}" style="width:100%;height:200px" var="ts" showCheckbox="true" converter="speakerConverter">  
+				<p:selectManyMenu id="speaker" value="#{talkController.assignedSpeakers}" style="width:100%;height:200px" var="ts" showCheckbox="true" converter="speakerConverter">  
 		            <f:selectItems value="#{talkController.loadSpeakers()}" var="speaker" itemLabel="#{speaker.name}" itemValue="#{speaker}" />  
-		   			<f:attribute name="collectionType" value="java.util.HashSet" />
+		   			<f:attribute name="collectionType" value="java.util.ArrayList" />
 		   			
 		            <p:column>  
 		                #{ts.name} - #{ts.description}

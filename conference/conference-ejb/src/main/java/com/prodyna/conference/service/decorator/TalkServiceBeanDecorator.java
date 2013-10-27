@@ -12,6 +12,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.persistence.EntityManager;
 
+import com.prodyna.conference.model.Speaker;
 import com.prodyna.conference.model.Talk;
 import com.prodyna.conference.producer.QueueSender;
 import com.prodyna.conference.producer.QueueSender.MessageCreatorCallback;
@@ -45,14 +46,23 @@ public class TalkServiceBeanDecorator implements TalkService {
 		return talkService.getTalksByRoom(roomId);
 	}
 
+	public List<Speaker> getSpeakersByTalk(Long talkId) {
+		return talkService.getSpeakersByTalk(talkId);
+	}
+
+	public Talk getTalk(Long talkId) {
+		return talkService.getTalk(talkId);
+	}
+
 	@Override
-	public Talk saveTalk(Talk talk) throws ConferenceServiceException {
+	public Talk saveTalk(Talk talk, List<Speaker> speakerList)
+			throws ConferenceServiceException {
 		Talk oldTalk = null;
 		if (talk.getId() != null) {
 			oldTalk = entityManager.find(Talk.class, talk.getId());
 		}
 
-		final Talk newTalk = talkService.saveTalk(talk);
+		final Talk newTalk = talkService.saveTalk(talk, speakerList);
 
 		if (oldTalk != null) {
 			// Check updates and send Message to queue.
@@ -97,11 +107,6 @@ public class TalkServiceBeanDecorator implements TalkService {
 	}
 
 	@Override
-	public Talk loadTalkEager(Long talkId) {
-		return talkService.loadTalkEager(talkId);
-	}
-
-	@Override
 	public List<Talk> getAllTalks() {
 		return talkService.getAllTalks();
 	}
@@ -109,11 +114,6 @@ public class TalkServiceBeanDecorator implements TalkService {
 	@Override
 	public void deleteTalk(Talk talk) {
 		talkService.deleteTalk(talk);
-	}
-
-	@Override
-	public Talk loadTalkEager(Talk talk) {
-		return talkService.loadTalkEager(talk);
 	}
 
 	@Override

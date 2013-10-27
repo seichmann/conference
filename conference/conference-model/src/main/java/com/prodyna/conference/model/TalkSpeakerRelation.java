@@ -2,27 +2,32 @@ package com.prodyna.conference.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
-//@Entity
-//@XmlRootElement
-//@Table(name = "talk_speaker")
-//@NamedQueries({ @NamedQuery(name = "TalkSpeakerRelation.ByTalkId", query = "SELECT t FROM TalkSpeakerRelation t where t.talk.id = :talk_id") })
-@Deprecated
+@Entity
+@XmlRootElement
+@Table(name = "talk_speaker")
+@NamedQueries({
+		@NamedQuery(name = "TalkSpeakerRelation.ByTalk", query = "SELECT t FROM TalkSpeakerRelation t where t.talk.id = :talkId"),
+		@NamedQuery(name = "TalkSpeakerRelation.BySpeaker", query = "SELECT t from TalkSpeakerRelation t where t.speaker.id = :speakerId"),
+		@NamedQuery(name = "TalkSpeakerRelation.ByBusinessKey", query = "SELECT t from TalkSpeakerRelation t where t.speaker.id = :speakerId and t.talk.id = :talkId"), })
 public class TalkSpeakerRelation implements Serializable {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	@OneToOne
+	@ManyToOne
 	private Talk talk;
 
-	@OneToOne
+	@ManyToOne
 	private Speaker speaker;
 
 	public Talk getTalk() {

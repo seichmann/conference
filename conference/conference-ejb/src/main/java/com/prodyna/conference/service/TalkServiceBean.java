@@ -1,5 +1,6 @@
 package com.prodyna.conference.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,11 +9,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import org.hibernate.Hibernate;
-
 import com.prodyna.conference.interceptor.Monitored;
 import com.prodyna.conference.model.Speaker;
 import com.prodyna.conference.model.Talk;
+import com.prodyna.conference.model.TalkSpeakerRelation;
 import com.prodyna.conference.service.exception.ConferenceServiceException;
 import com.prodyna.conference.service.exception.RoomConstraintException;
 import com.prodyna.conference.service.exception.SpeakerConstraintException;
@@ -33,25 +33,29 @@ public class TalkServiceBean implements TalkService {
 
 	@Override
 	public void deleteTalk(Talk talk) {
-		Talk loadedtalk = em.find(Talk.class, talk.getId());
+		Talk loadedtalk = getTalk(talk.getId());
 
 		if (loadedtalk != null) {
+			unassignAllSpeakers(loadedtalk);
 			em.remove(loadedtalk);
 		}
-
 	}
 
 	@Override
-	public Talk saveTalk(Talk talk) throws ConferenceServiceException {
+	public Talk saveTalk(Talk talk, List<Speaker> speakerList)
+			throws ConferenceServiceException {
 		// Validate Constraints
 		List<Talk> talks = getTalks(talk.getStart(), talk.getEnd());
 
-		if (talk.getSpeakers() != null && !talk.getSpeakers().isEmpty()) {
-			for (Speaker speaker : talk.getSpeakers()) {
+		if (speakerList != null && !speakerList.isEmpty()) {
+			for (Speaker speaker : speakerList) {
 				for (Talk existingTalk : talks) {
+					List<Speaker> existingSpeakers = getSpeakersByTalk(existingTalk
+							.getId());
+
 					if (!isSameTalk(existingTalk, talk)
-							&& existingTalk.getSpeakers() != null
-							&& existingTalk.getSpeakers().contains(speaker)) {
+							&& existingSpeakers != null
+							&& existingSpeakers.contains(speaker)) {
 						throw new SpeakerConstraintException(existingTalk);
 					}
 				}
@@ -69,7 +73,34 @@ public class TalkServiceBean implements TalkService {
 		}
 
 		Talk result = em.merge(talk);
+
+		// Unassign when updated talk.
+		if (talk.getId() != null) {
+			unassignAllSpeakers(result);
+		}
+
+		if (speakerList != null && !speakerList.isEmpty()) {
+			for (Speaker speaker : speakerList) {
+				assignSpeaker(result, speaker);
+			}
+		}
+
 		return result;
+	}
+
+	private void assignSpeaker(Talk talk, Speaker speaker) {
+		TalkSpeakerRelation talkSpeakerRelation = new TalkSpeakerRelation();
+		talkSpeakerRelation.setTalk(talk);
+		talkSpeakerRelation.setSpeaker(speaker);
+		em.persist(talkSpeakerRelation);
+	}
+
+	private void unassignAllSpeakers(Talk talk) {
+		List<TalkSpeakerRelation> talkSpeakerRelations = getTalkSpeakerRelations(talk
+				.getId());
+		for (TalkSpeakerRelation talkSpeakerRelation : talkSpeakerRelations) {
+			em.remove(talkSpeakerRelation);
+		}
 	}
 
 	private boolean isSameTalk(Talk existingTalk, Talk talk) {
@@ -78,23 +109,22 @@ public class TalkServiceBean implements TalkService {
 	}
 
 	@Override
-	public Talk loadTalkEager(Talk talk) {
-		if (talk.getSpeakers().size() > 0) {
-			return loadTalkEager(talk.getId());
-		} else {
-			return talk;
+	public List<Speaker> getSpeakersByTalk(Long talkId) {
+		List<TalkSpeakerRelation> talkSpeakerRelations = getTalkSpeakerRelations(talkId);
+		List<Speaker> result = new ArrayList<Speaker>();
+		for (TalkSpeakerRelation talkSpeakerRelation : talkSpeakerRelations) {
+			result.add(talkSpeakerRelation.getSpeaker());
 		}
-
+		return result;
 	}
 
-	@Override
-	public Talk loadTalkEager(Long talkId) {
-		Talk result = em.find(Talk.class, talkId);
+	private List<TalkSpeakerRelation> getTalkSpeakerRelations(Long talkId) {
+		TypedQuery<TalkSpeakerRelation> query = em.createNamedQuery(
+				"TalkSpeakerRelation.ByTalk", TalkSpeakerRelation.class);
+		query.setParameter("talkId", talkId);
 
-		// Trigger query Speaker List
-		Hibernate.initialize(result.getSpeakers());
-
-		return result;
+		List<TalkSpeakerRelation> talkSpeakerRelations = query.getResultList();
+		return talkSpeakerRelations;
 	}
 
 	@Override
@@ -108,10 +138,17 @@ public class TalkServiceBean implements TalkService {
 
 	@Override
 	public List<Talk> getTalksBySpeaker(Long speakerId) {
-		TypedQuery<Talk> query = em.createNamedQuery("Talk.BySpeaker",
-				Talk.class);
+		TypedQuery<TalkSpeakerRelation> query = em.createNamedQuery(
+				"TalkSpeakerRelation.BySpeaker", TalkSpeakerRelation.class);
 		query.setParameter("speakerId", speakerId);
-		return query.getResultList();
+
+		List<TalkSpeakerRelation> talkSpeakerRelations = query.getResultList();
+
+		List<Talk> result = new ArrayList<Talk>();
+		for (TalkSpeakerRelation talkSpeakerRelation : talkSpeakerRelations) {
+			result.add(talkSpeakerRelation.getTalk());
+		}
+		return result;
 	}
 
 	@Override
@@ -119,6 +156,11 @@ public class TalkServiceBean implements TalkService {
 		TypedQuery<Talk> query = em.createNamedQuery("Talk.ByRoom", Talk.class);
 		query.setParameter("roomId", roomId);
 		return query.getResultList();
+	}
+
+	@Override
+	public Talk getTalk(Long talkId) {
+		return talkId != null ? em.find(Talk.class, talkId) : null;
 	}
 
 	// @Override

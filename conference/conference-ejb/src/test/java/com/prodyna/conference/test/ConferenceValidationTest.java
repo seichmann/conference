@@ -37,7 +37,7 @@ public class ConferenceValidationTest extends AbstractDeployableTest {
 		talk1.setDescription("JPA, CDI, EJB");
 		talk1.setStart(DateUtil.parseHourMinute("01.05.2015 12:30"));
 		talk1.setEnd(DateUtil.parseHourMinute("01.05.2015 14:30"));
-		Talk saveTalk1 = talkService.saveTalk(talk1);
+		Talk saveTalk1 = talkService.saveTalk(talk1, null);
 
 		Conference conference = new Conference();
 		conference.setName("Prodyna Hausmesser");

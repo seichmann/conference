@@ -1,9 +1,7 @@
 package com.prodyna.conference.controller.admin;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -46,9 +44,11 @@ public class TalkController extends AbstractController {
 
 	private Talk editTalk;
 
+	private List<Speaker> assignedSpeakers;
+
 	private List<Room> allRooms;
 
-	private Set<Speaker> allSpeakers;
+	private List<Speaker> allSpeakers;
 
 	public TalkController() {
 		createNew();
@@ -65,7 +65,7 @@ public class TalkController extends AbstractController {
 
 	public void save() {
 		try {
-			talkService.saveTalk(editTalk);
+			talkService.saveTalk(editTalk, assignedSpeakers);
 		} catch (Throwable t) {
 			exceptionHandler.handle(t);
 		}
@@ -74,6 +74,8 @@ public class TalkController extends AbstractController {
 	public void delete() {
 		try {
 			talkService.deleteTalk(editTalk);
+
+			createNew();
 		} catch (Throwable t) {
 			exceptionHandler.handle(t);
 		}
@@ -82,9 +84,9 @@ public class TalkController extends AbstractController {
 	public void onRowSelect(SelectEvent event) {
 		editTalk = (Talk) event.getObject();
 
-		// Load Lazy Collection
+		// Load Speakers
 		try {
-			editTalk = talkService.loadTalkEager(editTalk);
+			assignedSpeakers = talkService.getSpeakersByTalk(editTalk.getId());
 		} catch (Throwable t) {
 			exceptionHandler.handle(t);
 		}
@@ -96,14 +98,16 @@ public class TalkController extends AbstractController {
 
 	public void createNew() {
 		editTalk = new Talk();
+
+		assignedSpeakers = null;
 	}
 
-	public Set<Speaker> loadSpeakers() {
+	public List<Speaker> loadSpeakers() {
 		try {
-			allSpeakers = new HashSet<Speaker>(speakerService.getAllSpeakers());
+			allSpeakers = speakerService.getAllSpeakers();
 		} catch (Throwable t) {
 			exceptionHandler.handle(t);
-			allSpeakers = new HashSet<Speaker>();
+			allSpeakers = new ArrayList<Speaker>();
 		}
 		return allSpeakers;
 	}
@@ -136,11 +140,19 @@ public class TalkController extends AbstractController {
 		this.allRooms = allRooms;
 	}
 
-	public Set<Speaker> getAllSpeakers() {
+	public List<Speaker> getAllSpeakers() {
 		return allSpeakers;
 	}
 
-	public void setAllSpeakers(Set<Speaker> allSpeakers) {
+	public void setAllSpeakers(List<Speaker> allSpeakers) {
 		this.allSpeakers = allSpeakers;
+	}
+
+	public List<Speaker> getAssignedSpeakers() {
+		return assignedSpeakers;
+	}
+
+	public void setAssignedSpeakers(List<Speaker> assignedSpeakers) {
+		this.assignedSpeakers = assignedSpeakers;
 	}
 }
