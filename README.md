@@ -14,30 +14,32 @@ The application this project produces is designed to be run on JBoss Enterprise 
 
 A running mysql-database with following settings is required:
 
+<pre>
 user: conference
 password: conference
-schema: conference 
+schema: conference
+</pre>
 
 Build and Deploy
 ================
 
-There are three different maven profiles for different purposes:
+There are three different maven profiles for different purposes.
 
-mvn clean package : 
+Creates ear-file for manual deployment:
 
-Creates ear-file for manual deployment
+<pre>mvn clean package</pre>
 
-mvn clean install -Pdev : 
+Automatically deploys ear file to running jboss instance for development:
 
-Automatically deploys ear file to running jboss instance for development
+<pre>mvn clean install -Pdev</pre>
 
-mvn clean install -Parq-jbossas-remote :
+Install ear file in local repository when all unit tests passes:
 
-Install ear file in local repository when all unit tests passes.
+<pre>mvn clean install -Parq-jbossas-remote</pre>
 
 Access application
 ==================
 
 UI can be accessed via web browser under following url:
 
-http://localhost:8080/conference-web/
+<pre>http://localhost:8080/conference-web/</pre>
