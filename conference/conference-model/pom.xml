@@ -10,6 +10,12 @@
   <artifactId>conference-model</artifactId>
   
   <dependencies>
+  		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<version>3.2.4</version>
+		</dependency>
+		
   	    <!-- Import the JPA API, we use provided scope as the API is included in JBoss AS 7 -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
@@ -33,4 +39,25 @@
         	<scope>provided</scope>
         </dependency>
   </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+		      <groupId>com.mysema.maven</groupId>
+		      <artifactId>apt-maven-plugin</artifactId>
+		      <version>1.0.9</version>
+		      <executions>
+		        <execution>
+		          <goals>
+		            <goal>process</goal>
+		          </goals>
+		          <configuration>
+		            <outputDirectory>src/main/gen</outputDirectory>
+		            <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+		          </configuration>
+		        </execution>
+		      </executions>
+		    </plugin>
+  	</plugins>
+  </build>
 </project>

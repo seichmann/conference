@@ -6,6 +6,8 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.impl.base.filter.ExcludeRegExpPaths;
+import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import org.junit.runner.RunWith;
 
 import com.prodyna.conference.mbean.Entry;
@@ -42,6 +44,10 @@ public abstract class AbstractDeployableTest {
 		war.addAsResource("META-INF/test-persistence.xml",
 				"META-INF/persistence.xml");
 		war.addAsWebInfResource("test-ds.xml", "test-ds.xml");
+		war.addAsLibraries(DependencyResolvers
+				.use(MavenDependencyResolver.class)
+				.loadMetadataFromPom("pom.xml")
+				.artifacts("com.mysema.querydsl:querydsl-jpa").resolveAsFiles());
 		return war;
 	}
 }

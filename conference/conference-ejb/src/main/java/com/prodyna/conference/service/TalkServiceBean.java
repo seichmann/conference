@@ -9,7 +9,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import com.mysema.query.jpa.impl.JPADeleteClause;
+import com.mysema.query.jpa.impl.JPAQuery;
 import com.prodyna.conference.interceptor.Monitored;
+import com.prodyna.conference.model.QTalk;
 import com.prodyna.conference.model.Speaker;
 import com.prodyna.conference.model.Talk;
 import com.prodyna.conference.model.TalkSpeakerRelation;
@@ -37,7 +40,7 @@ public class TalkServiceBean implements TalkService {
 
 		if (loadedtalk != null) {
 			unassignAllSpeakers(loadedtalk);
-			em.remove(loadedtalk);
+			new JPADeleteClause(em, QTalk.talk).execute();
 		}
 	}
 
@@ -129,11 +132,12 @@ public class TalkServiceBean implements TalkService {
 
 	@Override
 	public List<Talk> getTalks(Date start, Date end) {
-		TypedQuery<Talk> query = em
-				.createNamedQuery("Talk.ByDates", Talk.class);
-		query.setParameter("start", start);
-		query.setParameter("end", end);
-		return query.getResultList();
+		JPAQuery query = new JPAQuery(em);
+		QTalk talk = QTalk.talk;
+		query.from(talk).where(talk.start.lt(start).and(talk.end.gt(start)),
+				talk.start.lt(end).and(talk.end.gt(end)),
+				talk.start.gt(start).and(talk.end.lt(end)));
+		return query.list(talk);
 	}
 
 	@Override

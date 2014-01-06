@@ -2,5 +2,7 @@
     <wb-module deploy-name="conference-model">
         <wb-resource deploy-path="/" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/gen"/>
+        <wb-resource deploy-path="/" source-path="/.apt_generated"/>
     </wb-module>
 </project-modules>
